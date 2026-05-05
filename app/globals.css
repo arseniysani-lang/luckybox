@@ -1,0 +1,325 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Базовые стили для мобильной адаптивности */
+  :root {
+    --base-font-size: 14px;
+    --header-height-mobile: 64px;
+    --header-height-tablet: 80px; 
+    --header-height-desktop: 96px;
+    --container-padding-mobile: 16px;
+    --container-padding-tablet: 24px;
+    --container-padding-desktop: 32px;
+  }
+  
+  @media (min-width: 768px) {
+    :root {
+      --base-font-size: 16px;
+    }
+  }
+}
+
+@layer components {
+  .gold-gradient {
+    @apply bg-gradient-to-r from-gold-200 to-gold-300;
+  }
+  
+  /* Адаптивные компоненты */
+  .responsive-container {
+    @apply px-4 md:px-6 lg:px-8 w-full max-w-7xl mx-auto;
+  }
+  
+  .responsive-section {
+    @apply py-12 md:py-16 lg:py-24;
+  }
+  
+  .responsive-heading-xl {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+  }
+  
+  .responsive-heading-lg {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold;
+  }
+  
+  .responsive-heading-md {
+    @apply text-xl md:text-2xl lg:text-3xl font-bold;
+  }
+  
+  .responsive-heading-sm {
+    @apply text-lg md:text-xl lg:text-2xl font-bold;
+  }
+  
+  .responsive-text-lg {
+    @apply text-base md:text-lg lg:text-xl;
+  }
+  
+  .responsive-text-md {
+    @apply text-sm md:text-base lg:text-lg;
+  }
+  
+  .responsive-text-sm {
+    @apply text-xs md:text-sm lg:text-base;
+  }
+  
+  .responsive-button {
+    @apply px-4 py-2 md:px-6 md:py-2.5 lg:px-8 lg:py-3 text-sm md:text-base rounded-lg font-medium transition-all duration-300;
+  }
+  
+  .responsive-card {
+    @apply p-4 md:p-6 lg:p-8 rounded-lg md:rounded-xl bg-white shadow-sm hover:shadow-md transition-all duration-300;
+  }
+  
+  .responsive-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8;
+  }
+}
+
+@layer utilities {
+  /* Адаптивные утилиты */
+  .touch-better {
+    @apply touch-manipulation cursor-pointer select-none;
+  }
+  
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+  
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
+  
+  .visually-hidden {
+    @apply sr-only;
+  }
+}
+
+/* Темы */
+:root {
+  --gold-100: #FFF8E1;
+  --gold-200: #FFE57F;
+  --gold-300: #FFCC29;
+  --gold-400: #FFB400;
+  --gold-500: #FFA000;
+  --gold-600: #FF8F00;
+}
+
+.theme-dark {
+  --gold-100: #423800;
+  --gold-200: #705D00;
+  --gold-300: #917700;
+  --gold-400: #B49300;
+  --gold-500: #DBAA00;
+  --gold-600: #FFC107;
+}
+
+/* Существующие стили... */
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  min-height: 100vh;
+}
+
+/* Gallery Styles */
+.gallery-container {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  background: white;
+  border-radius: 24px;
+}
+
+.gallery-gradient {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 120px;
+  z-index: 10;
+}
+
+.gallery-gradient-left {
+  left: 0;
+  background: linear-gradient(to right, rgb(255, 255, 255) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.gallery-gradient-right {
+  right: 0;
+  background: linear-gradient(to left, rgb(255, 255, 255) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.gallery-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  perspective: 1500px;
+  transform-style: preserve-3d;
+}
+
+.gallery-track {
+  display: flex;
+  height: auto;
+  min-height: 300px;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+  transform-style: preserve-3d;
+  width: 100%;
+}
+
+.gallery-track:active {
+  cursor: grabbing;
+}
+
+.gallery-item {
+  position: absolute;
+  display: flex;
+  height: fit-content;
+  align-items: center;
+  justify-content: center;
+  padding: 6%;
+  backface-visibility: hidden;
+  transition: transform 0.4s ease;
+}
+
+.gallery-img {
+  pointer-events: none;
+  height: 240px;
+  width: 400px;
+  border-radius: 16px;
+  border: 3px solid #FFD700;
+  object-fit: cover;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 30px rgba(255, 215, 0, 0.1);
+}
+
+.gallery-item:hover .gallery-img {
+  transform: scale(1.05);
+  border-color: #FFD700;
+  box-shadow: 0 8px 40px rgba(255, 215, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .gallery-container {
+    padding: 10px;
+  }
+
+  .gallery-gradient {
+    width: 60px;
+  }
+
+  .gallery-item {
+    padding: 4%;
+  }
+
+  .gallery-img {
+    height: 180px;
+    width: 300px;
+  }
+}
+
+/* Улучшенные стили для текстового контента */
+.prose {
+  @apply max-w-none;
+}
+
+.prose h1 {
+  @apply text-4xl font-bold mb-8 text-black;
+}
+
+.prose h2 {
+  @apply text-3xl font-semibold mb-6 text-black;
+}
+
+.prose h3 {
+  @apply text-2xl font-semibold mb-4 text-black;
+}
+
+.prose p {
+  @apply text-gray-700 mb-4 leading-relaxed;
+}
+
+.prose ul {
+  @apply list-disc list-inside space-y-2 text-gray-700 mb-6;
+}
+
+/* Анимации */
+.fade-in {
+  @apply opacity-0 animate-[fadeIn_0.5s_ease-in_forwards];
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Дополнительные глобальные стили */
+.prose {
+  max-width: 65ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.prose h1 {
+  color: rgb(var(--foreground-rgb));
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 700;
+}
+
+.prose h2 {
+  color: rgb(var(--foreground-rgb));
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 600;
+}
+
+.prose p {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose ul {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  padding-left: 1.625rem;
+  list-style-type: disc;
+}
+
+/* Добавляем стили для скрытия значка Static route */
+div.nextjs-toast.nextjs-static-indicator-toast-wrapper,
+div[role="status"].nextjs-toast,
+.nextjs-static-indicator-toast-wrapper,
+.nextjs-toast {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  z-index: -9999 !important;
+} 

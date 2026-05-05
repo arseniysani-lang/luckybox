@@ -1,0 +1,87 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+    content: [
+      './pages/**/*.{js,ts,jsx,tsx,mdx}',
+      './components/**/*.{js,ts,jsx,tsx,mdx}',
+      './app/**/*.{js,ts,jsx,tsx,mdx}',
+    ],
+    safelist: [
+      'from-gold-200', 
+      'to-gold-300', 
+      'from-gold-300', 
+      'to-amber-400',
+      'text-gold-200',
+      'text-gold-300',
+      'text-gold-400',
+      'text-gold-500',
+      'bg-gold-50',
+      'bg-gold-100',
+      'bg-gold-200',
+      'bg-gold-300',
+      'border-gold-100',
+      'border-gold-200',
+      'border-gold-300',
+      'hover:bg-gold-300',
+      'hover:text-gold-500',
+      'hover:text-gold-600',
+      'group-hover:text-gold-200',
+      'group-hover:text-gold-500',
+    ],
+    theme: {
+      extend: {
+        colors: {
+          primary: '#1A1A1A',
+          secondary: '#FFFFFF',
+          accent: '#FFD700',
+          neutral: {
+            50: '#F9F9F9',
+            100: '#F2F2F2',
+            200: '#E6E6E6',
+            300: '#D9D9D9',
+            400: '#CCCCCC',
+            500: '#B3B3B3',
+            600: '#808080',
+            700: '#666666',
+            800: '#4D4D4D',
+            900: '#333333',
+          },
+          gold: {
+            50: '#fff9e5', 
+            100: '#fff3cc',
+            200: '#ffd700',
+            300: '#e6c200',
+            400: '#ccac00',
+            500: '#b39700',
+            600: '#998200',
+            700: '#806c00',
+            800: '#665700',
+            900: '#4d4100',
+            950: '#332b00',
+          },
+          'light-gold': '#FFF3CC',
+        },
+        backgroundColor: {
+          'primary': '#000000',
+          'secondary': '#FFFFFF',
+          'accent': '#FFD700',
+        },
+        textColor: {
+          'primary': '#000000',
+          'secondary': '#FFFFFF',
+          'accent': '#FFD700',
+        },
+        backgroundImage: {
+          'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+          'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        },
+        fontFamily: {
+          sans: ['var(--font-roboto)'],
+        },
+        boxShadow: {
+          gold: '0 4px 14px 0 rgba(255, 215, 0, 0.39)',
+        },
+      },
+    },
+    plugins: [],
+  };
+  
