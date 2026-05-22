@@ -247,7 +247,7 @@ export default function ClientLayout({
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
                   <path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path>
                 </svg>
-                <Link 
+                <Link
                   href="/"
                   data-nav-link="true"
                   data-hash="#why-us"
@@ -255,6 +255,19 @@ export default function ClientLayout({
                   onClick={(e) => handleNavigation(e, { href: '/', hash: '#why-us' })}
                 >
                   Преимущества
+                </Link>
+              </div>
+
+              <div className="flex items-center gap-1 text-white hover:text-gold-200 transition-colors cursor-pointer">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
+                  <path d="M20 3H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-1 13H5V7h14v9zM7 9h2v2H7zm0 4h2v2H7zm4-4h6v2h-6zm0 4h6v2h-6z"/>
+                </svg>
+                <Link
+                  href="/calculator"
+                  className="text-sm font-medium text-white hover:text-gold-200 transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Калькулятор
                 </Link>
               </div>
 
@@ -379,6 +392,20 @@ export default function ClientLayout({
                         <path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path>
                       </svg>
                       Преимущества
+                    </span>
+                  </Link>
+                </motion.div>
+                <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.35, duration: 0.3 }}>
+                  <Link
+                    href="/calculator"
+                    className="block text-white hover:text-gold-200 transition-colors py-3 px-4 text-sm font-medium rounded hover:bg-neutral-800/50 active:bg-neutral-800/70 touch-manipulation"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span className="flex items-center">
+                      <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
+                        <path d="M20 3H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-1 13H5V7h14v9zM7 9h2v2H7zm0 4h2v2H7zm4-4h6v2h-6zm0 4h6v2h-6z"/>
+                      </svg>
+                      Калькулятор
                     </span>
                   </Link>
                 </motion.div>
