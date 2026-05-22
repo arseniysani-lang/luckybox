@@ -35,15 +35,6 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/calculator-services.json',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'no-cache, no-store, must-revalidate',
-          },
-        ],
-      },
-      {
         source: '/:path*',
         headers: [
           {
@@ -74,6 +65,15 @@ const nextConfig = {
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
+          },
+        ],
+      },
+      {
+        source: '/calculator-services.json',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
           },
         ],
       },
