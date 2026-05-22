@@ -35,6 +35,15 @@ const nextConfig = {
   async headers() {
     return [
       {
+        source: '/calculator-services.json',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+        ],
+      },
+      {
         source: '/:path*',
         headers: [
           {
@@ -71,7 +80,6 @@ const nextConfig = {
     ]
   },
   trailingSlash: false,
-  output: 'standalone',
   experimental: {
     optimizeCss: true,
     optimizePackageImports: ['framer-motion'],
