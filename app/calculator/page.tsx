@@ -127,7 +127,7 @@ export default function CalculatorPage() {
   const [services, setServices] = useState<Service[]>(defaultServices);
 
   useEffect(() => {
-    fetch('/calculator-services.json')
+    fetch(`/calculator-services.json?_=${Date.now()}`, { cache: 'no-store' })
       .then(r => r.json())
       .then((data: { services?: Service[] }) => {
         if (data.services?.length) {
