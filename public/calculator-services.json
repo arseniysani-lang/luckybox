@@ -138,7 +138,7 @@
       "name": "Короб малый (до 1 кг)",
       "desc": "",
       "pricePerUnit": 39.0,
-      "unit": "шт.",
+      "unit": "короб",
       "categoryId": "packing"
     },
     {
@@ -146,7 +146,7 @@
       "name": "Короб средний (1–5 кг)",
       "desc": "",
       "pricePerUnit": 62.0,
-      "unit": "шт.",
+      "unit": "короб",
       "categoryId": "packing"
     },
     {
@@ -154,7 +154,7 @@
       "name": "Короб большой (5–20 кг)",
       "desc": "",
       "pricePerUnit": 98.0,
-      "unit": "шт.",
+      "unit": "короб",
       "categoryId": "packing"
     },
     {
@@ -162,7 +162,7 @@
       "name": "Короб XL (>20 кг)",
       "desc": "",
       "pricePerUnit": 154.0,
-      "unit": "шт.",
+      "unit": "короб",
       "categoryId": "packing"
     },
     {
@@ -234,7 +234,7 @@
       "name": "ШК WB на короб (FBO)",
       "desc": "",
       "pricePerUnit": 6.6,
-      "unit": "шт.",
+      "unit": "короб",
       "categoryId": "marking"
     },
     {
@@ -242,7 +242,7 @@
       "name": "ШК Ozon на короб (FBO)",
       "desc": "",
       "pricePerUnit": 6.6,
-      "unit": "шт.",
+      "unit": "короб",
       "categoryId": "marking"
     },
     {
@@ -250,7 +250,7 @@
       "name": "ШК Яндекс.Маркет",
       "desc": "",
       "pricePerUnit": 7.6,
-      "unit": "шт.",
+      "unit": "короб",
       "categoryId": "marking"
     },
     {
