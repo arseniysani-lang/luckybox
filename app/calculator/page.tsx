@@ -204,7 +204,7 @@ export default function CalculatorPage() {
     const text = buildOrderText();
     sendToTelegram();
     const links: Record<string, string> = {
-      telegram: `https://t.me/luckybox_orders_bot?text=${encodeURIComponent(text)}`,
+      telegram: `https://t.me/LUCKY_BOX_COPACKING?text=${encodeURIComponent(text)}`,
       whatsapp: `https://wa.me/79933361405?text=${encodeURIComponent(text)}`,
       max: `https://max.ru/+79933361405?text=${encodeURIComponent(text)}`,
       email: `mailto:info@luckybox.su?subject=${encodeURIComponent('Заявка с калькулятора')}&body=${encodeURIComponent(text)}`,
