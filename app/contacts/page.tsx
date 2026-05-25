@@ -9,7 +9,11 @@ import ThankYouModal from '../components/ThankYouModal';
 
 const MaxIcon = ({ size = 24, className = '' }: { size?: number; className?: string; weight?: string }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M20.665 3.717L2.93 10.787c-1.293.518-1.286 1.239-.237 1.559l4.51 1.408 10.456-6.592c.493-.3.943-.139.573.192L8.59 15.851l-.34 4.51c.499 0 .719-.228.997-.496l2.394-2.323 4.97 3.668c.917.505 1.576.245 1.804-.851l3.268-15.386c.335-1.344-.512-1.954-1.018-1.256z"/>
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5.003L2 22l4.997-1.338A9.955 9.955 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zM7 12A5 5 0 1 0 17 12A5 5 0 1 0 7 12Z"
+    />
   </svg>
 );
 
