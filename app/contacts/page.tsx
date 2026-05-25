@@ -2,10 +2,16 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import YandexMap from '../components/YandexMap';
-import { Phone, EnvelopeSimple, TelegramLogo, MapPin, Clock, WhatsappLogo, ChatCircle } from "@phosphor-icons/react";
+import { Phone, EnvelopeSimple, TelegramLogo, MapPin, Clock, WhatsappLogo } from "@phosphor-icons/react";
 import axios from 'axios';
 import Link from 'next/link';
 import ThankYouModal from '../components/ThankYouModal';
+
+const MaxIcon = ({ size = 24, className = '' }: { size?: number; className?: string; weight?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M20.665 3.717L2.93 10.787c-1.293.518-1.286 1.239-.237 1.559l4.51 1.408 10.456-6.592c.493-.3.943-.139.573.192L8.59 15.851l-.34 4.51c.499 0 .719-.228.997-.496l2.394-2.323 4.97 3.668c.917.505 1.576.245 1.804-.851l3.268-15.386c.335-1.344-.512-1.954-1.018-1.256z"/>
+  </svg>
+);
 
 export default function ContactsPage() {
   const [formData, setFormData] = useState({
@@ -85,7 +91,7 @@ export default function ContactsPage() {
       onClick: () => handleContactClick('whatsapp')
     },
     {
-      icon: ChatCircle,
+      icon: MaxIcon,
       title: "Max",
       content: "+7 993 336 1405",
       link: "https://max.ru/+79933361405",
