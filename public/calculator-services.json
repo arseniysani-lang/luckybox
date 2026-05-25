@@ -250,7 +250,7 @@
       "name": "Сборка заказа (1 позиция)",
       "desc": "",
       "pricePerUnit": 29.0,
-      "unit": "заказ",
+      "unit": "ед.",
       "categoryId": "assembly"
     },
     {
@@ -258,7 +258,7 @@
       "name": "Каждая дополнительная позиция",
       "desc": "",
       "pricePerUnit": 9.4,
-      "unit": "поз",
+      "unit": "ед.",
       "categoryId": "assembly"
     },
     {
@@ -266,7 +266,7 @@
       "name": "Сборка комплекта/набора (3+ ед)",
       "desc": "",
       "pricePerUnit": 47.0,
-      "unit": "набор",
+      "unit": "ед.",
       "categoryId": "assembly"
     },
     {
@@ -290,7 +290,7 @@
       "name": "Срочная сборка (до 2 ч)",
       "desc": "",
       "pricePerUnit": 96.0,
-      "unit": "заказ",
+      "unit": "ед.",
       "categoryId": "assembly"
     },
     {
