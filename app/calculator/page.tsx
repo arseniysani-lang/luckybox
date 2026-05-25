@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const marketplaces = ['Wildberries', 'OZON'];
 
@@ -126,6 +125,13 @@ export default function CalculatorPage() {
   const [selectedServices, setSelectedServices] = useState<string[]>(['reception', 'marking']);
   const [services, setServices] = useState<Service[]>(defaultServices);
 
+  const [showModal, setShowModal] = useState(false);
+  const [formName, setFormName] = useState('');
+  const [formPhone, setFormPhone] = useState('');
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [sendError, setSendError] = useState(false);
+
   useEffect(() => {
     fetch(`/calculator-services.json?_=${Date.now()}`, { cache: 'no-store' })
       .then(r => r.json())
@@ -161,6 +167,45 @@ export default function CalculatorPage() {
     .reduce((sum, s) => sum + getServiceCost(s), 0);
   const total = deliveryCost + servicesCost;
   const perUnit = units > 0 ? (total / units) : 0;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSending(true);
+    setSendError(false);
+    try {
+      const res = await fetch('/api/send-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formName,
+          phone: formPhone,
+          marketplace: activeMarketplace,
+          delivery: deliveryTabs[activeTab].label,
+          warehouse: selectedWarehouseData?.name ?? '—',
+          units,
+          boxes,
+          services: services
+            .filter(s => selectedServices.includes(s.id))
+            .map(s => ({ name: s.name, cost: getServiceCost(s) })),
+          deliveryCost,
+          servicesCost,
+          total,
+          perUnit: perUnit.toFixed(2),
+        }),
+      });
+      if (res.ok) {
+        setSent(true);
+        setFormName('');
+        setFormPhone('');
+      } else {
+        setSendError(true);
+      }
+    } catch {
+      setSendError(true);
+    } finally {
+      setSending(false);
+    }
+  };
 
   const marketplaceHints: Record<string, string> = {
     Wildberries: 'Wildberries: 2 часа ожидания на складе бесплатно, далее 700 ₽/час',
@@ -392,18 +437,102 @@ export default function CalculatorPage() {
                 <div className="text-xs font-medium text-neutral-700 mb-1">Стоимость за единицу товара</div>
                 <div className="text-2xl font-bold text-neutral-900">{perUnit.toFixed(2)} ₽</div>
               </div>
-              <Link
-                href="/contacts"
+              <button
+                onClick={() => { setSent(false); setSendError(false); setShowModal(true); }}
                 className="w-full text-center px-6 py-3 border-2 border-gold-200 text-gold-200 font-semibold rounded-xl hover:bg-gold-200 hover:text-neutral-900 transition-colors"
               >
                 Оформить заявку →
-              </Link>
+              </button>
             </div>
           </div>
           <p className="text-xs text-neutral-500 text-center mt-6">* Цены указаны ориентировочно. Для точного расчёта свяжитесь с нами.</p>
         </motion.section>
 
       </div>
+
+      {/* Модальная форма заявки */}
+      <AnimatePresence>
+        {showModal && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowModal(false)}
+          >
+            <motion.div
+              className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-md shadow-xl"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              onClick={e => e.stopPropagation()}
+            >
+              {sent ? (
+                <div className="text-center py-6">
+                  <div className="text-5xl mb-4">✅</div>
+                  <h3 className="text-xl font-bold text-neutral-900 mb-2">Заявка отправлена!</h3>
+                  <p className="text-neutral-500 mb-6">Мы свяжемся с вами в ближайшее время.</p>
+                  <button
+                    onClick={() => setShowModal(false)}
+                    className="px-6 py-3 bg-neutral-800 text-white font-semibold rounded-xl hover:bg-neutral-700 transition-colors"
+                  >
+                    Закрыть
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-xl font-bold text-neutral-900">Оформить заявку</h3>
+                    <button onClick={() => setShowModal(false)} className="text-neutral-400 hover:text-neutral-600 text-2xl leading-none">&times;</button>
+                  </div>
+
+                  {/* Краткий итог */}
+                  <div className="bg-neutral-50 rounded-xl p-4 mb-6 text-sm text-neutral-600 space-y-1">
+                    <div className="flex justify-between"><span>{activeMarketplace}, {selectedWarehouseData?.name}</span><span className="font-medium">{deliveryCost.toLocaleString('ru-RU')} ₽</span></div>
+                    <div className="flex justify-between"><span>Услуги</span><span className="font-medium">{servicesCost.toLocaleString('ru-RU')} ₽</span></div>
+                    <div className="flex justify-between pt-2 border-t border-neutral-200 font-bold text-neutral-900"><span>Итого</span><span>{total.toLocaleString('ru-RU')} ₽</span></div>
+                  </div>
+
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-neutral-600 mb-1">Ваше имя</label>
+                      <input
+                        type="text"
+                        required
+                        value={formName}
+                        onChange={e => setFormName(e.target.value)}
+                        placeholder="Иван Иванов"
+                        className="w-full border border-neutral-200 rounded-xl px-4 py-3 text-neutral-900 focus:outline-none focus:ring-2 focus:ring-gold-200"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-neutral-600 mb-1">Телефон</label>
+                      <input
+                        type="tel"
+                        required
+                        value={formPhone}
+                        onChange={e => setFormPhone(e.target.value)}
+                        placeholder="+7 (999) 000-00-00"
+                        className="w-full border border-neutral-200 rounded-xl px-4 py-3 text-neutral-900 focus:outline-none focus:ring-2 focus:ring-gold-200"
+                      />
+                    </div>
+                    {sendError && (
+                      <p className="text-red-500 text-sm">Ошибка отправки. Попробуйте ещё раз или позвоните нам.</p>
+                    )}
+                    <button
+                      type="submit"
+                      disabled={sending}
+                      className="w-full px-6 py-3 bg-neutral-800 text-white font-semibold rounded-xl hover:bg-neutral-700 transition-colors disabled:opacity-50"
+                    >
+                      {sending ? 'Отправляем...' : 'Отправить заявку'}
+                    </button>
+                  </form>
+                </>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

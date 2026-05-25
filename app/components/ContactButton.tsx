@@ -87,11 +87,11 @@ export default function ContactButton() {
     },
     {
       icon: EnvelopeSimple,
-      label: 'info@luckybox.ru',
-      value: 'info@luckybox.ru',
+      label: 'info@luckybox.su',
+      value: 'info@luckybox.su',
       color: 'bg-red-500',
       isLink: true,
-      href: 'mailto:info@luckybox.ru'
+      href: 'mailto:info@luckybox.su'
     }
   ];
 

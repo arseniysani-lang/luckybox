@@ -87,8 +87,8 @@ export default function ContactsPage() {
     {
       icon: EnvelopeSimple,
       title: "Email",
-      content: "info@luckybox.ru",
-      link: "mailto:info@luckybox.ru"
+      content: "info@luckybox.su",
+      link: "mailto:info@luckybox.su"
     },
     {
       icon: Clock,
