@@ -366,38 +366,6 @@
       "categoryId": "returns"
     },
     {
-      "id": "extra-68",
-      "name": "Фото товара (1 ракурс)",
-      "desc": "",
-      "pricePerUnit": 95.0,
-      "unit": "ед.",
-      "categoryId": "extra"
-    },
-    {
-      "id": "extra-69",
-      "name": "Фото (5 ракурсов + фон)",
-      "desc": "",
-      "pricePerUnit": 301.0,
-      "unit": "ед.",
-      "categoryId": "extra"
-    },
-    {
-      "id": "extra-70",
-      "name": "360° видео товара",
-      "desc": "",
-      "pricePerUnit": 750.0,
-      "unit": "ед.",
-      "categoryId": "extra"
-    },
-    {
-      "id": "extra-71",
-      "name": "Инфографика для МП",
-      "desc": "",
-      "pricePerUnit": 621.0,
-      "unit": "карт.",
-      "categoryId": "extra"
-    },
-    {
       "id": "extra-72",
       "name": "Переупаковка/рефасовка",
       "desc": "",
@@ -406,67 +374,11 @@
       "categoryId": "extra"
     },
     {
-      "id": "extra-73",
-      "name": "Контроль качества (QC)",
-      "desc": "",
-      "pricePerUnit": 11.0,
-      "unit": "ед.",
-      "categoryId": "extra"
-    },
-    {
       "id": "extra-74",
       "name": "Полная инвентаризация склада",
       "desc": "",
-      "pricePerUnit": 962.0,
+      "pricePerUnit": 1500.0,
       "unit": "час",
-      "categoryId": "extra"
-    },
-    {
-      "id": "extra-75",
-      "name": "Ответственность за недостачу",
-      "desc": "",
-      "pricePerUnit": 2.2,
-      "unit": "% от ст-ти",
-      "categoryId": "extra"
-    },
-    {
-      "id": "extra-76",
-      "name": "Персональный менеджер (VIP)",
-      "desc": "",
-      "pricePerUnit": 4150.0,
-      "unit": "мес",
-      "categoryId": "extra"
-    },
-    {
-      "id": "extra-77",
-      "name": "Интеграция с МойСклад/1С",
-      "desc": "",
-      "pricePerUnit": 6917.0,
-      "unit": "руб (разово)",
-      "categoryId": "extra"
-    },
-    {
-      "id": "extra-78",
-      "name": "API-доступ к остаткам",
-      "desc": "",
-      "pricePerUnit": 1388.0,
-      "unit": "мес",
-      "categoryId": "extra"
-    },
-    {
-      "id": "extra-79",
-      "name": "Страхование груза",
-      "desc": "",
-      "pricePerUnit": 0.33,
-      "unit": "% от ст-ти",
-      "categoryId": "extra"
-    },
-    {
-      "id": "extra-80",
-      "name": "Выдача товара клиенту самовывоз",
-      "desc": "",
-      "pricePerUnit": 18.0,
-      "unit": "ед.",
       "categoryId": "extra"
     }
   ]
