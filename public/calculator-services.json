@@ -102,14 +102,6 @@
       "categoryId": "storage"
     },
     {
-      "id": "storage-10",
-      "name": "Бесплатное хранение (первые)",
-      "desc": "",
-      "pricePerUnit": 5.9,
-      "unit": "дней",
-      "categoryId": "storage"
-    },
-    {
       "id": "storage-11",
       "name": "Минимальный объём хранения",
       "desc": "",
