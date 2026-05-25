@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import YandexMap from '../components/YandexMap';
-import { Phone, EnvelopeSimple, TelegramLogo, MapPin, Clock, WhatsappLogo } from "@phosphor-icons/react";
+import { Phone, EnvelopeSimple, TelegramLogo, MapPin, Clock, WhatsappLogo, ChatCircle } from "@phosphor-icons/react";
 import axios from 'axios';
 import Link from 'next/link';
 import ThankYouModal from '../components/ThankYouModal';
@@ -73,8 +73,8 @@ export default function ContactsPage() {
     {
       icon: TelegramLogo,
       title: "Telegram",
-      content: "@luckybox_orders_bot",
-      link: "https://t.me/luckybox_orders_bot",
+      content: "@LUCKY_BOX_COPACKING",
+      link: "https://t.me/LUCKY_BOX_COPACKING",
       onClick: () => handleContactClick('telegram')
     },
     {
@@ -83,6 +83,13 @@ export default function ContactsPage() {
       content: "+7 993 336 1405",
       link: "https://wa.me/79933361405",
       onClick: () => handleContactClick('whatsapp')
+    },
+    {
+      icon: ChatCircle,
+      title: "Max",
+      content: "+7 993 336 1405",
+      link: "https://max.ru/+79933361405",
+      onClick: () => handleContactClick('max')
     },
     {
       icon: EnvelopeSimple,
