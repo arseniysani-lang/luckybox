@@ -62,14 +62,6 @@
       "categoryId": "reception"
     },
     {
-      "id": "reception-4",
-      "name": "Минимальная сумма приёмки",
-      "desc": "",
-      "pricePerUnit": 952.0,
-      "unit": "заявка",
-      "categoryId": "reception"
-    },
-    {
       "id": "reception-5",
       "name": "Срочная приёмка (день в день)",
       "desc": "",
@@ -99,14 +91,6 @@
       "desc": "",
       "pricePerUnit": 284.0,
       "unit": "м³/мес",
-      "categoryId": "storage"
-    },
-    {
-      "id": "storage-11",
-      "name": "Минимальный объём хранения",
-      "desc": "",
-      "pricePerUnit": 1.5,
-      "unit": "паллет",
       "categoryId": "storage"
     },
     {
