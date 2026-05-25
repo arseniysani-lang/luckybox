@@ -182,9 +182,7 @@ export default function ClientLayout({
   return (
     <>
       {/* Навигация */}
-      <nav className={`fixed w-full top-0 z-50 transition-colors duration-300 border-b ${
-        isScrolled ? 'bg-neutral-900/60 backdrop-blur-sm border-neutral-800/20' : 'bg-transparent border-transparent'
-      }`}>
+      <nav className="fixed w-full top-0 z-50 transition-colors duration-300 border-b bg-neutral-900/60 backdrop-blur-sm border-neutral-800/20">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between items-center h-16 md:h-20 lg:h-24">
             {/* Логотип и текст */}
