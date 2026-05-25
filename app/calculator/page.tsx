@@ -546,7 +546,7 @@ export default function CalculatorPage() {
                         onClick={() => handleMessenger('max')}
                         className="flex items-center justify-center gap-2 px-4 py-3 bg-[#0077FF] text-white font-semibold rounded-xl hover:opacity-90 transition-opacity disabled:opacity-40"
                       >
-                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.5 6.5h-2.25A1.25 1.25 0 0 0 13 9.75v.75h3.5l-.5 2H13V18h-2v-5.5H9.5v-2H11v-.75A3.25 3.25 0 0 1 14.25 6.5H16.5v2z"/></svg>
+                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5.003L2 22l4.997-1.338A9.955 9.955 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zM7 12A5 5 0 1 0 17 12A5 5 0 1 0 7 12Z"/></svg>
                         Max
                       </button>
                       <button
