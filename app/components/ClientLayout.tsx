@@ -480,7 +480,7 @@ export default function ClientLayout({
               <h4 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-neutral-900">Контакты</h4>
               <p className="text-sm md:text-base text-neutral-600">Email: info@luckybox.su</p>
               <p className="text-sm md:text-base text-neutral-600">Телефон: +7 993 336 1405</p>
-              <p className="text-sm md:text-base text-neutral-600">Telegram: @LUCKY_BOX_COPACKING</p>
+              <p className="text-sm md:text-base text-neutral-600">Telegram: @luckybox_orders_bot</p>
               <p className="text-sm md:text-base text-neutral-600">Адрес: микрорайон Полянка, к. 25, г. Пушкино, Московская область</p>
             </div>
           </div>

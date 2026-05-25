@@ -76,7 +76,7 @@ export default function ContactButton() {
       label: 'Telegram',
       color: 'bg-blue-500',
       isLink: true,
-      href: 'https://t.me/LUCKY_BOX_COPACKING'
+      href: 'https://t.me/luckybox_orders_bot'
     },
     {
       icon: WhatsappLogo,

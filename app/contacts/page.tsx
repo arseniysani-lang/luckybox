@@ -73,8 +73,8 @@ export default function ContactsPage() {
     {
       icon: TelegramLogo,
       title: "Telegram",
-      content: "@LUCKY_BOX_COPACKING",
-      link: "https://t.me/LUCKY_BOX_COPACKING",
+      content: "@luckybox_orders_bot",
+      link: "https://t.me/luckybox_orders_bot",
       onClick: () => handleContactClick('telegram')
     },
     {
