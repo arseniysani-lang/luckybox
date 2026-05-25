@@ -1,385 +1,56 @@
 {
   "categories": [
-    {
-      "id": "reception",
-      "name": "Приёмка товара",
-      "icon": "📋"
-    },
-    {
-      "id": "storage",
-      "name": "Хранение",
-      "icon": "🏭"
-    },
-    {
-      "id": "packing",
-      "name": "Упаковка",
-      "icon": "📦"
-    },
-    {
-      "id": "marking",
-      "name": "Маркировка",
-      "icon": "🏷️"
-    },
-    {
-      "id": "assembly",
-      "name": "Сборка заказов",
-      "icon": "🔧"
-    },
-    {
-      "id": "returns",
-      "name": "Обработка возвратов",
-      "icon": "🔄"
-    },
-    {
-      "id": "extra",
-      "name": "Дополнительные услуги",
-      "icon": "⭐"
-    }
+    { "id": "reception", "name": "Приёмка товара", "icon": "" },
+    { "id": "storage", "name": "Хранение", "icon": "" },
+    { "id": "packing", "name": "Упаковка", "icon": "" },
+    { "id": "marking", "name": "Маркировка", "icon": "" },
+    { "id": "assembly", "name": "Сборка заказов", "icon": "" },
+    { "id": "returns", "name": "Обработка возвратов", "icon": "" },
+    { "id": "extra", "name": "Дополнительные услуги", "icon": "" }
   ],
   "services": [
-    {
-      "id": "reception-1",
-      "name": "Приёмка штучного товара",
-      "desc": "",
-      "pricePerUnit": 5.8,
-      "unit": "ед.",
-      "categoryId": "reception"
-    },
-    {
-      "id": "reception-2",
-      "name": "Приёмка товара на паллете",
-      "desc": "",
-      "pricePerUnit": 571.0,
-      "unit": "паллет",
-      "categoryId": "reception"
-    },
-    {
-      "id": "reception-3",
-      "name": "Нестандартный/негабарит",
-      "desc": "",
-      "pricePerUnit": 14.0,
-      "unit": "ед.",
-      "categoryId": "reception"
-    },
-    {
-      "id": "reception-5",
-      "name": "Срочная приёмка (день в день)",
-      "desc": "",
-      "pricePerUnit": 1792.0,
-      "unit": "заявка",
-      "categoryId": "reception"
-    },
-    {
-      "id": "storage-7",
-      "name": "Хранение ячейки (полка 60×40)",
-      "desc": "",
-      "pricePerUnit": 339.0,
-      "unit": "ячейка/мес",
-      "categoryId": "storage"
-    },
-    {
-      "id": "storage-8",
-      "name": "Хранение за 1 м²",
-      "desc": "",
-      "pricePerUnit": 676.0,
-      "unit": "м²/мес",
-      "categoryId": "storage"
-    },
-    {
-      "id": "storage-9",
-      "name": "Ответственное хранение (доп.)",
-      "desc": "",
-      "pricePerUnit": 284.0,
-      "unit": "м³/мес",
-      "categoryId": "storage"
-    },
-    {
-      "id": "packing-12",
-      "name": "Пакет полиэтиленовый",
-      "desc": "",
-      "pricePerUnit": 9.8,
-      "unit": "шт.",
-      "categoryId": "packing"
-    },
-    {
-      "id": "packing-13",
-      "name": "Пузырчатая плёнка (лист А4)",
-      "desc": "",
-      "pricePerUnit": 5.5,
-      "unit": "лист",
-      "categoryId": "packing"
-    },
-    {
-      "id": "packing-14",
-      "name": "Короб малый (до 1 кг)",
-      "desc": "",
-      "pricePerUnit": 39.0,
-      "unit": "короб",
-      "categoryId": "packing"
-    },
-    {
-      "id": "packing-15",
-      "name": "Короб средний (1–5 кг)",
-      "desc": "",
-      "pricePerUnit": 62.0,
-      "unit": "короб",
-      "categoryId": "packing"
-    },
-    {
-      "id": "packing-16",
-      "name": "Короб большой (5–20 кг)",
-      "desc": "",
-      "pricePerUnit": 98.0,
-      "unit": "короб",
-      "categoryId": "packing"
-    },
-    {
-      "id": "packing-17",
-      "name": "Короб XL (>20 кг)",
-      "desc": "",
-      "pricePerUnit": 154.0,
-      "unit": "короб",
-      "categoryId": "packing"
-    },
-    {
-      "id": "packing-18",
-      "name": "Стрейч-упаковка паллета",
-      "desc": "",
-      "pricePerUnit": 142.0,
-      "unit": "паллет",
-      "categoryId": "packing"
-    },
-    {
-      "id": "packing-19",
-      "name": "Термоусадочная упаковка",
-      "desc": "",
-      "pricePerUnit": 21.0,
-      "unit": "шт.",
-      "categoryId": "packing"
-    },
-    {
-      "id": "packing-20",
-      "name": "Подарочная упаковка (крафт)",
-      "desc": "",
-      "pricePerUnit": 42.0,
-      "unit": "шт.",
-      "categoryId": "packing"
-    },
-    {
-      "id": "packing-21",
-      "name": "Упаковка «хрупкое» (комплекс)",
-      "desc": "",
-      "pricePerUnit": 31.0,
-      "unit": "ед.",
-      "categoryId": "packing"
-    },
-    {
-      "id": "marking-22",
-      "name": "Маркировка одной позиции",
-      "desc": "",
-      "pricePerUnit": 5.6,
-      "unit": "шт.",
-      "categoryId": "marking"
-    },
-    {
-      "id": "marking-22b",
-      "name": "Двойная маркировка",
-      "desc": "",
-      "pricePerUnit": 11.2,
-      "unit": "шт.",
-      "categoryId": "marking"
-    },
-    {
-      "id": "marking-23",
-      "name": "Честный знак (маркировка)",
-      "desc": "",
-      "pricePerUnit": 14.0,
-      "unit": "шт.",
-      "categoryId": "marking"
-    },
-    {
-      "id": "marking-24",
-      "name": "Перемаркировка (замена)",
-      "desc": "",
-      "pricePerUnit": 9.4,
-      "unit": "шт.",
-      "categoryId": "marking"
-    },
-    {
-      "id": "marking-25",
-      "name": "RFID-метка (одежда/обувь)",
-      "desc": "",
-      "pricePerUnit": 29.0,
-      "unit": "шт.",
-      "categoryId": "marking"
-    },
-    {
-      "id": "marking-26",
-      "name": "ШК WB на короб (FBO)",
-      "desc": "",
-      "pricePerUnit": 6.6,
-      "unit": "короб",
-      "categoryId": "marking"
-    },
-    {
-      "id": "marking-27",
-      "name": "ШК Ozon на короб (FBO)",
-      "desc": "",
-      "pricePerUnit": 6.6,
-      "unit": "короб",
-      "categoryId": "marking"
-    },
-    {
-      "id": "marking-28",
-      "name": "ШК Яндекс.Маркет",
-      "desc": "",
-      "pricePerUnit": 7.6,
-      "unit": "короб",
-      "categoryId": "marking"
-    },
-    {
-      "id": "marking-29",
-      "name": "Акцизная марка (алкоголь)",
-      "desc": "",
-      "pricePerUnit": 17.0,
-      "unit": "шт.",
-      "categoryId": "marking"
-    },
-    {
-      "id": "assembly-30",
-      "name": "Сборка заказа (1 позиция)",
-      "desc": "",
-      "pricePerUnit": 29.0,
-      "unit": "ед.",
-      "categoryId": "assembly"
-    },
-    {
-      "id": "assembly-31",
-      "name": "Каждая дополнительная позиция",
-      "desc": "",
-      "pricePerUnit": 9.4,
-      "unit": "ед.",
-      "categoryId": "assembly"
-    },
-    {
-      "id": "assembly-32",
-      "name": "Сборка комплекта/набора (3+ ед)",
-      "desc": "",
-      "pricePerUnit": 47.0,
-      "unit": "ед.",
-      "categoryId": "assembly"
-    },
-    {
-      "id": "assembly-33",
-      "name": "Вложение листовки/открытки",
-      "desc": "",
-      "pricePerUnit": 3.6,
-      "unit": "шт.",
-      "categoryId": "assembly"
-    },
-    {
-      "id": "assembly-34",
-      "name": "Персонализация (нанесение текста)",
-      "desc": "",
-      "pricePerUnit": 37.0,
-      "unit": "ед.",
-      "categoryId": "assembly"
-    },
-    {
-      "id": "assembly-35",
-      "name": "Срочная сборка (до 2 ч)",
-      "desc": "",
-      "pricePerUnit": 96.0,
-      "unit": "ед.",
-      "categoryId": "assembly"
-    },
-    {
-      "id": "assembly-36",
-      "name": "Проверка товара",
-      "desc": "",
-      "pricePerUnit": 5.8,
-      "unit": "ед.",
-      "categoryId": "assembly"
-    },
-    {
-      "id": "returns-60",
-      "name": "Приёмка возврата с WB",
-      "desc": "",
-      "pricePerUnit": 58.0,
-      "unit": "ед.",
-      "categoryId": "returns"
-    },
-    {
-      "id": "returns-61",
-      "name": "Приёмка возврата с Ozon",
-      "desc": "",
-      "pricePerUnit": 62.0,
-      "unit": "ед.",
-      "categoryId": "returns"
-    },
-    {
-      "id": "returns-62",
-      "name": "Приёмка возврата с ЯМ",
-      "desc": "",
-      "pricePerUnit": 59.0,
-      "unit": "ед.",
-      "categoryId": "returns"
-    },
-    {
-      "id": "returns-63",
-      "name": "Сортировка/проверка возврата",
-      "desc": "",
-      "pricePerUnit": 23.0,
-      "unit": "ед.",
-      "categoryId": "returns"
-    },
-    {
-      "id": "returns-64",
-      "name": "Повторная упаковка возврата",
-      "desc": "",
-      "pricePerUnit": 36.0,
-      "unit": "ед.",
-      "categoryId": "returns"
-    },
-    {
-      "id": "returns-65",
-      "name": "Утилизация товара",
-      "desc": "",
-      "pricePerUnit": 17.0,
-      "unit": "ед.",
-      "categoryId": "returns"
-    },
-    {
-      "id": "returns-66",
-      "name": "Возврат товара клиенту",
-      "desc": "",
-      "pricePerUnit": 118.0,
-      "unit": "ед.",
-      "categoryId": "returns"
-    },
-    {
-      "id": "returns-67",
-      "name": "Карантин бракованного товара",
-      "desc": "",
-      "pricePerUnit": 12.0,
-      "unit": "ед/мес",
-      "categoryId": "returns"
-    },
-    {
-      "id": "extra-72",
-      "name": "Переупаковка/рефасовка",
-      "desc": "",
-      "pricePerUnit": 24.0,
-      "unit": "ед.",
-      "categoryId": "extra"
-    },
-    {
-      "id": "extra-74",
-      "name": "Полная инвентаризация склада",
-      "desc": "",
-      "pricePerUnit": 1500.0,
-      "unit": "час",
-      "categoryId": "extra"
-    }
+    { "id": "reception-1", "name": "Приёмка штучного товара", "desc": "", "pricePerUnit": 5.8, "unit": "ед.", "categoryId": "reception" },
+    { "id": "reception-2", "name": "Приёмка товара на паллете", "desc": "", "pricePerUnit": 571.0, "unit": "паллет", "categoryId": "reception" },
+    { "id": "reception-3", "name": "Нестандартный/негабарит", "desc": "", "pricePerUnit": 14.0, "unit": "ед.", "categoryId": "reception" },
+    { "id": "reception-5", "name": "Срочная приёмка (день в день)", "desc": "", "pricePerUnit": 1792.0, "unit": "заявка", "categoryId": "reception" },
+    { "id": "storage-7", "name": "Хранение ячейки (полка 60×40)", "desc": "", "pricePerUnit": 339.0, "unit": "ячейка/мес", "categoryId": "storage" },
+    { "id": "storage-8", "name": "Хранение за 1 м²", "desc": "", "pricePerUnit": 45.0, "unit": "м²/день", "categoryId": "storage" },
+    { "id": "storage-9", "name": "Ответственное хранение (доп.)", "desc": "", "pricePerUnit": 284.0, "unit": "м³/мес", "categoryId": "storage" },
+    { "id": "packing-12", "name": "Пакет полиэтиленовый", "desc": "", "pricePerUnit": 9.8, "unit": "шт.", "categoryId": "packing" },
+    { "id": "packing-13", "name": "Пузырчатая плёнка (лист А4)", "desc": "", "pricePerUnit": 5.5, "unit": "лист", "categoryId": "packing" },
+    { "id": "packing-14", "name": "Короб малый (до 1 кг)", "desc": "", "pricePerUnit": 39.0, "unit": "короб", "categoryId": "packing" },
+    { "id": "packing-15", "name": "Короб средний (1–5 кг)", "desc": "", "pricePerUnit": 62.0, "unit": "короб", "categoryId": "packing" },
+    { "id": "packing-16", "name": "Короб большой (5–20 кг)", "desc": "", "pricePerUnit": 98.0, "unit": "короб", "categoryId": "packing" },
+    { "id": "packing-17", "name": "Короб XL (>20 кг)", "desc": "", "pricePerUnit": 154.0, "unit": "короб", "categoryId": "packing" },
+    { "id": "packing-18", "name": "Стрейч-упаковка паллета", "desc": "", "pricePerUnit": 142.0, "unit": "паллет", "categoryId": "packing" },
+    { "id": "packing-19", "name": "Термоусадочная упаковка", "desc": "", "pricePerUnit": 21.0, "unit": "шт.", "categoryId": "packing" },
+    { "id": "packing-20", "name": "Подарочная упаковка (крафт)", "desc": "", "pricePerUnit": 42.0, "unit": "шт.", "categoryId": "packing" },
+    { "id": "packing-21", "name": "Упаковка хрупкого (комплекс)", "desc": "", "pricePerUnit": 31.0, "unit": "ед.", "categoryId": "packing" },
+    { "id": "marking-22", "name": "Маркировка одной позиции", "desc": "", "pricePerUnit": 5.6, "unit": "шт.", "categoryId": "marking" },
+    { "id": "marking-22b", "name": "Двойная маркировка", "desc": "", "pricePerUnit": 11.2, "unit": "шт.", "categoryId": "marking" },
+    { "id": "marking-23", "name": "Честный знак (маркировка)", "desc": "", "pricePerUnit": 14.0, "unit": "шт.", "categoryId": "marking" },
+    { "id": "marking-24", "name": "Перемаркировка (замена)", "desc": "", "pricePerUnit": 9.4, "unit": "шт.", "categoryId": "marking" },
+    { "id": "marking-25", "name": "RFID-метка (одежда/обувь)", "desc": "", "pricePerUnit": 29.0, "unit": "шт.", "categoryId": "marking" },
+    { "id": "marking-26", "name": "ШК WB на короб (FBO)", "desc": "", "pricePerUnit": 6.6, "unit": "короб", "categoryId": "marking" },
+    { "id": "marking-27", "name": "ШК Ozon на короб (FBO)", "desc": "", "pricePerUnit": 6.6, "unit": "короб", "categoryId": "marking" },
+    { "id": "marking-28", "name": "ШК Яндекс.Маркет", "desc": "", "pricePerUnit": 7.6, "unit": "короб", "categoryId": "marking" },
+    { "id": "marking-29", "name": "Акцизная марка (алкоголь)", "desc": "", "pricePerUnit": 17.0, "unit": "шт.", "categoryId": "marking" },
+    { "id": "assembly-30", "name": "Сборка заказа (1 позиция)", "desc": "", "pricePerUnit": 29.0, "unit": "ед.", "categoryId": "assembly" },
+    { "id": "assembly-31", "name": "Каждая дополнительная позиция", "desc": "", "pricePerUnit": 9.4, "unit": "ед.", "categoryId": "assembly" },
+    { "id": "assembly-32", "name": "Сборка комплекта/набора (3+ ед)", "desc": "", "pricePerUnit": 47.0, "unit": "ед.", "categoryId": "assembly" },
+    { "id": "assembly-33", "name": "Вложение листовки/открытки", "desc": "", "pricePerUnit": 3.6, "unit": "шт.", "categoryId": "assembly" },
+    { "id": "assembly-34", "name": "Персонализация (нанесение текста)", "desc": "", "pricePerUnit": 37.0, "unit": "ед.", "categoryId": "assembly" },
+    { "id": "assembly-35", "name": "Срочная сборка (до 2 ч)", "desc": "", "pricePerUnit": 96.0, "unit": "ед.", "categoryId": "assembly" },
+    { "id": "assembly-36", "name": "Проверка товара", "desc": "", "pricePerUnit": 5.8, "unit": "ед.", "categoryId": "assembly" },
+    { "id": "returns-60", "name": "Приёмка возврата с WB", "desc": "", "pricePerUnit": 58.0, "unit": "ед.", "categoryId": "returns" },
+    { "id": "returns-61", "name": "Приёмка возврата с Ozon", "desc": "", "pricePerUnit": 62.0, "unit": "ед.", "categoryId": "returns" },
+    { "id": "returns-62", "name": "Приёмка возврата с ЯМ", "desc": "", "pricePerUnit": 59.0, "unit": "ед.", "categoryId": "returns" },
+    { "id": "returns-63", "name": "Сортировка/проверка возврата", "desc": "", "pricePerUnit": 23.0, "unit": "ед.", "categoryId": "returns" },
+    { "id": "returns-64", "name": "Повторная упаковка возврата", "desc": "", "pricePerUnit": 36.0, "unit": "ед.", "categoryId": "returns" },
+    { "id": "returns-65", "name": "Утилизация товара", "desc": "", "pricePerUnit": 17.0, "unit": "ед.", "categoryId": "returns" },
+    { "id": "returns-66", "name": "Возврат товара клиенту", "desc": "", "pricePerUnit": 118.0, "unit": "ед.", "categoryId": "returns" },
+    { "id": "returns-67", "name": "Карантин бракованного товара", "desc": "", "pricePerUnit": 12.0, "unit": "ед/мес", "categoryId": "returns" },
+    { "id": "extra-72", "name": "Переупаковка/рефасовка", "desc": "", "pricePerUnit": 24.0, "unit": "ед.", "categoryId": "extra" },
+    { "id": "extra-74", "name": "Полная инвентаризация склада", "desc": "", "pricePerUnit": 1500.0, "unit": "час", "categoryId": "extra" }
   ]
 }

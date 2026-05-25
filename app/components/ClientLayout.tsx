@@ -19,7 +19,6 @@ export default function ClientLayout({
   const isNavigatingRef = useRef(false);
   const router = useRouter();
 
-  // Используем useEffect с опцией { passive: true } для слушателей событий скролла
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -30,20 +29,16 @@ export default function ClientLayout({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Закрываем мобильное меню при изменении маршрута
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [router]);
 
-  // Обработка хэш-навигации при загрузке страницы
   useEffect(() => {
-    // Функция для скролла к секции по хэшу
     const scrollToSection = () => {
       const hash = window.location.hash;
       if (hash) {
         const targetElement = document.getElementById(hash.substring(1));
         if (targetElement) {
-          // Используем requestAnimationFrame для оптимизации
           requestAnimationFrame(() => {
             const offset = 100;
             const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
@@ -56,37 +51,30 @@ export default function ClientLayout({
       }
     };
 
-    // Скролл при первоначальной загрузке
     if (window.location.hash) {
-      // Задержка для уверенности, что страница полностью загружена
       setTimeout(scrollToSection, 300);
     }
 
-    // Обработчик для изменения хэша - с опцией passive
     window.addEventListener('hashchange', scrollToSection, { passive: true });
     return () => window.removeEventListener('hashchange', scrollToSection);
   }, []);
 
-  // Добавляем эффект для обработки событий клика на ссылках после загрузки страницы
   useEffect(() => {
-    // Функция для обработки клика на ссылках навигации
     const handleLinkClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const link = target.closest('a');
-      
+
       if (link && link.hasAttribute('data-nav-link')) {
         e.preventDefault();
-        
+
         const hash = link.getAttribute('data-hash');
-        
+
         if (hash) {
-          // Если мы не на главной странице, перенаправляем на главную с хэшем
           if (window.location.pathname !== '/') {
             window.location.href = `/${hash}`;
             return;
           }
-          
-          // Если мы на главной, скроллим к нужной секции
+
           const targetElement = document.getElementById(hash.substring(1));
           if (targetElement) {
             const offset = 100;
@@ -99,52 +87,41 @@ export default function ClientLayout({
         }
       }
     };
-    
-    // Добавляем обработчик событий с опцией passive
+
     document.addEventListener('click', handleLinkClick, { passive: false });
-    
-    // Очищаем обработчик при размонтировании
+
     return () => {
       document.removeEventListener('click', handleLinkClick);
     };
   }, []);
 
-  // Оптимизированная функция handleNavigation с useCallback
   const handleNavigation = useCallback((e: React.MouseEvent<HTMLAnchorElement>, link: { href: string, hash?: string }) => {
-    // Предотвращаем двойные клики
     if (isNavigatingRef.current) {
       return;
     }
-    
-    // Устанавливаем флаг, что навигация выполняется
+
     isNavigatingRef.current = true;
-    
-    // Очищаем предыдущий таймаут, если он есть
+
     if (clickTimeoutRef.current) {
       clearTimeout(clickTimeoutRef.current);
     }
-    
+
     if (link.hash) {
       e.preventDefault();
-      
-      // Сохраняем ссылку, чтобы выполнить навигацию после закрытия меню
+
       const targetId = link.hash.substring(1);
-      
-      // Закрываем мобильное меню перед скроллом
+
       setIsMobileMenuOpen(false);
-      
-      // Если мы не на главной странице, перенаправляем на главную с хэшем
+
       if (window.location.pathname !== '/') {
         router.push(`/${link.hash}`);
-        
-        // Сбрасываем флаг навигации после задержки
+
         clickTimeoutRef.current = setTimeout(() => {
           isNavigatingRef.current = false;
         }, 800);
         return;
       }
-      
-      // Используем setTimeout, чтобы дать время меню закрыться перед скроллом
+
       setTimeout(() => {
         const targetElement = document.getElementById(targetId);
         if (targetElement) {
@@ -155,18 +132,15 @@ export default function ClientLayout({
             behavior: 'smooth'
           });
         }
-        
-        // Сбрасываем флаг навигации после задержки
+
         clickTimeoutRef.current = setTimeout(() => {
           isNavigatingRef.current = false;
-        }, 800); // Задержка достаточная, чтобы предотвратить двойные клики
-      }, 300); // Задержка в 300мс для закрытия меню
+        }, 800);
+      }, 300);
     } else {
-      // Если нет хэша, просто перенаправляем на указанную страницу
       router.push(link.href);
       setIsMobileMenuOpen(false);
-      
-      // Сбрасываем флаг навигации после задержки
+
       clickTimeoutRef.current = setTimeout(() => {
         isNavigatingRef.current = false;
       }, 800);
@@ -214,7 +188,7 @@ export default function ClientLayout({
                   <path d="M20 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM4 19V5h16l.002 14H4z"></path>
                   <path d="M6 7h12v2H6zm0 4h12v2H6zm0 4h6v2H6z"></path>
                 </svg>
-                <Link 
+                <Link
                   href="/"
                   data-nav-link="true"
                   data-hash="#services"
@@ -230,7 +204,7 @@ export default function ClientLayout({
                   <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path>
                   <path d="M11 11h2v6h-2zm0-4h2v2h-2z"></path>
                 </svg>
-                <Link 
+                <Link
                   href="/"
                   data-nav-link="true"
                   data-hash="#about"
@@ -269,9 +243,8 @@ export default function ClientLayout({
                 </Link>
               </div>
 
-              {/* Добавляем телефон */}
-              <a 
-                href="tel:+79933361405" 
+              <a
+                href="tel:+79933361405"
                 className="flex items-center gap-2 text-white hover:text-gold-200 transition-colors"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
@@ -280,8 +253,8 @@ export default function ClientLayout({
                 <span className="text-sm font-medium">+7 993 336 1405</span>
               </a>
 
-              <Link 
-                href="/contacts" 
+              <Link
+                href="/contacts"
                 className="px-6 py-3 bg-gold-200 text-black text-sm font-medium rounded-md hover:bg-gold-300 transition-colors duration-200 flex items-center"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
@@ -293,13 +266,13 @@ export default function ClientLayout({
             </div>
 
             {/* Мобильная кнопка меню */}
-            <motion.button 
+            <motion.button
               className="lg:hidden relative z-50 w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 flex items-center justify-center rounded-full bg-gold-200 shadow-md touch-manipulation"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.9 }}
               initial={{ backgroundColor: "#F5D77B" }}
-              animate={{ 
+              animate={{
                 backgroundColor: isMobileMenuOpen ? "#333333" : "#F5D77B",
                 transition: { duration: 0.3 }
               }}
@@ -344,8 +317,8 @@ export default function ClientLayout({
             >
               <div className="py-4 space-y-1 px-4">
                 <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1, duration: 0.3 }}>
-                  <Link 
-                    href="/" 
+                  <Link
+                    href="/"
                     data-nav-link="true"
                     data-hash="#services"
                     className="block text-white hover:text-gold-200 transition-colors py-3 px-4 text-sm font-medium rounded hover:bg-neutral-800/50 active:bg-neutral-800/70 touch-manipulation"
@@ -361,8 +334,8 @@ export default function ClientLayout({
                   </Link>
                 </motion.div>
                 <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2, duration: 0.3 }}>
-                  <Link 
-                    href="/" 
+                  <Link
+                    href="/"
                     data-nav-link="true"
                     data-hash="#about"
                     className="block text-white hover:text-gold-200 transition-colors py-3 px-4 text-sm font-medium rounded hover:bg-neutral-800/50 active:bg-neutral-800/70 touch-manipulation"
@@ -378,8 +351,8 @@ export default function ClientLayout({
                   </Link>
                 </motion.div>
                 <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3, duration: 0.3 }}>
-                  <Link 
-                    href="/" 
+                  <Link
+                    href="/"
                     data-nav-link="true"
                     data-hash="#why-us"
                     className="block text-white hover:text-gold-200 transition-colors py-3 px-4 text-sm font-medium rounded hover:bg-neutral-800/50 active:bg-neutral-800/70 touch-manipulation"
@@ -410,15 +383,15 @@ export default function ClientLayout({
                 <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4, duration: 0.3 }}>
                   <div className="mt-3 pt-3 border-t border-gray-200">
                     <div className="grid grid-cols-1 gap-2 my-3">
-                      <Link 
-                        href="/contacts" 
+                      <Link
+                        href="/contacts"
                         className="block w-full text-center px-3 py-4 bg-gold-100 text-black text-sm rounded font-medium hover:bg-gold-200 active:bg-gold-300 transition-colors duration-200 touch-manipulation"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Заказать звонок
                       </Link>
-                      <Link 
-                        href="/contacts" 
+                      <Link
+                        href="/contacts"
                         className="block w-full text-center px-3 py-4 bg-gold-400 text-black text-sm rounded font-medium hover:bg-gold-500 active:bg-gold-600 transition-colors duration-200 touch-manipulation"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
@@ -457,18 +430,12 @@ export default function ClientLayout({
               <h4 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-neutral-900">Компания</h4>
               <ul className="space-y-1 md:space-y-2">
                 <li>
-                  <Link 
-                    href="/about" 
-                    className="text-sm md:text-base text-neutral-600 hover:text-gold-300 transition-colors"
-                  >
+                  <Link href="/about" className="text-sm md:text-base text-neutral-600 hover:text-gold-300 transition-colors">
                     О нас
                   </Link>
                 </li>
                 <li>
-                  <Link 
-                    href="/contacts" 
-                    className="text-sm md:text-base text-neutral-600 hover:text-gold-300 transition-colors"
-                  >
+                  <Link href="/contacts" className="text-sm md:text-base text-neutral-600 hover:text-gold-300 transition-colors">
                     Контакты
                   </Link>
                 </li>
@@ -489,4 +456,4 @@ export default function ClientLayout({
       </footer>
     </>
   );
-} 
+}
