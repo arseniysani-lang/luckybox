@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-type Service = { id: string; icon?: string; name: string; desc: string; pricePerUnit: number; unit: string };
+type Category = { id: string; name: string; icon: string };
+type Service = { id: string; icon?: string; name: string; desc: string; pricePerUnit: number; unit: string; categoryId?: string };
 
 const defaultServices: Service[] = [
   { id: 'reception', icon: '📋', name: 'Приёмка и проверка', desc: 'Пересчёт, визуальная проверка упаковки, фото/видео отчёты', pricePerUnit: 14, unit: 'ед.' },
@@ -12,11 +13,15 @@ const defaultServices: Service[] = [
   { id: 'box', icon: '📫', name: 'Сборка короба', desc: 'Формирование транспортировочного короба, ШК-поставки', pricePerUnit: 80, unit: 'короб' },
 ];
 
+const defaultCategories: Category[] = [];
+
 export default function CalculatorPage() {
   const [units, setUnits] = useState(1000);
   const [boxes, setBoxes] = useState(10);
   const [selectedServices, setSelectedServices] = useState<string[]>(['reception', 'marking']);
   const [services, setServices] = useState<Service[]>(defaultServices);
+  const [categories, setCategories] = useState<Category[]>(defaultCategories);
+  const [activeCategory, setActiveCategory] = useState<string>('all');
 
   const [showModal, setShowModal] = useState(false);
   const [formName, setFormName] = useState('');
@@ -27,13 +32,14 @@ export default function CalculatorPage() {
   useEffect(() => {
     fetch(`/calculator-services.json?_=${Date.now()}`, { cache: 'no-store' })
       .then(r => r.json())
-      .then((data: { services?: Service[] }) => {
+      .then((data: { categories?: Category[]; services?: Service[] }) => {
         if (data.services?.length) {
           setServices(data.services);
-          setSelectedServices(prev => {
-            const valid = prev.filter(id => data.services!.some(s => s.id === id));
-            return valid.length > 0 ? valid : data.services!.slice(0, 1).map(s => s.id);
-          });
+          setSelectedServices([]);
+        }
+        if (data.categories?.length) {
+          setCategories(data.categories);
+          setActiveCategory('all');
         }
       })
       .catch(() => {});
@@ -48,9 +54,16 @@ export default function CalculatorPage() {
   const getServiceCost = (svc: Service) =>
     svc.unit === 'короб' ? svc.pricePerUnit * boxes : svc.pricePerUnit * units;
 
+  const visibleServices = activeCategory === 'all'
+    ? services
+    : services.filter(s => s.categoryId === activeCategory);
+
   const activeServices = services.filter(s => selectedServices.includes(s.id));
   const total = activeServices.reduce((sum, s) => sum + getServiceCost(s), 0);
   const perUnit = units > 0 ? total / units : 0;
+
+  const getCategoryIcon = (catId: string) =>
+    categories.find(c => c.id === catId)?.icon ?? '';
 
   const buildOrderText = () => {
     const svcLines = activeServices.map(s => `${s.name}: ${getServiceCost(s).toLocaleString('ru-RU')} ₽`).join(', ');
@@ -151,7 +164,7 @@ export default function CalculatorPage() {
               </div>
             </motion.div>
 
-            {/* Услуги */}
+            {/* Услуги с категориями */}
             <motion.div
               className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-6"
               initial={{ opacity: 0, y: 20 }}
@@ -159,53 +172,96 @@ export default function CalculatorPage() {
               transition={{ duration: 0.4, delay: 0.1 }}
             >
               <h2 className="text-lg font-bold text-neutral-900 mb-1">Услуги обработки</h2>
-              <p className="text-sm text-neutral-400 mb-5">Выберите одну или несколько услуг</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {services.map(svc => {
-                  const selected = selectedServices.includes(svc.id);
-                  const cost = getServiceCost(svc);
-                  return (
-                    <motion.div
-                      key={svc.id}
-                      onClick={() => toggleService(svc.id)}
-                      whileHover={{ scale: 1.01 }}
-                      whileTap={{ scale: 0.99 }}
-                      className={`cursor-pointer rounded-xl border-2 p-4 transition-all select-none ${
-                        selected
-                          ? 'border-amber-400 bg-amber-50 shadow-sm'
-                          : 'border-neutral-200 bg-white hover:border-neutral-300 hover:shadow-sm'
+              <p className="text-sm text-neutral-400 mb-4">Выберите одну или несколько услуг</p>
+
+              {/* Табы категорий */}
+              {categories.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-5">
+                  <button
+                    onClick={() => setActiveCategory('all')}
+                    className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                      activeCategory === 'all'
+                        ? 'bg-neutral-900 text-white'
+                        : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                    }`}
+                  >
+                    Все услуги
+                  </button>
+                  {categories.map(cat => (
+                    <button
+                      key={cat.id}
+                      onClick={() => setActiveCategory(cat.id)}
+                      className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1 ${
+                        activeCategory === cat.id
+                          ? 'bg-amber-400 text-neutral-900'
+                          : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
                       }`}
                     >
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-xl">{svc.icon}</span>
-                            <span className="font-semibold text-neutral-900 text-sm leading-tight">{svc.name}</span>
+                      <span>{cat.icon}</span>
+                      <span>{cat.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeCategory}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.2 }}
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-3"
+                >
+                  {visibleServices.map(svc => {
+                    const selected = selectedServices.includes(svc.id);
+                    const cost = getServiceCost(svc);
+                    const catIcon = svc.icon ?? getCategoryIcon(svc.categoryId ?? '');
+                    return (
+                      <motion.div
+                        key={svc.id}
+                        onClick={() => toggleService(svc.id)}
+                        whileHover={{ scale: 1.01 }}
+                        whileTap={{ scale: 0.99 }}
+                        className={`cursor-pointer rounded-xl border-2 p-4 transition-all select-none ${
+                          selected
+                            ? 'border-amber-400 bg-amber-50 shadow-sm'
+                            : 'border-neutral-200 bg-white hover:border-neutral-300 hover:shadow-sm'
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              {catIcon && <span className="text-lg">{catIcon}</span>}
+                              <span className="font-semibold text-neutral-900 text-sm leading-tight">{svc.name}</span>
+                            </div>
+                            {svc.desc && (
+                              <p className="text-xs text-neutral-400 mb-2 leading-relaxed">{svc.desc}</p>
+                            )}
+                            <div className="flex items-center justify-between">
+                              <span className="text-amber-500 font-bold text-sm">{svc.pricePerUnit} ₽/{svc.unit}</span>
+                              {selected && (
+                                <span className="text-xs font-semibold text-neutral-600 bg-white rounded-lg px-2 py-0.5 border border-neutral-200">
+                                  {cost.toLocaleString('ru-RU')} ₽
+                                </span>
+                              )}
+                            </div>
                           </div>
-                          <p className="text-xs text-neutral-400 mb-2 leading-relaxed">{svc.desc}</p>
-                          <div className="flex items-center justify-between">
-                            <span className="text-amber-500 font-bold text-sm">{svc.pricePerUnit} ₽/{svc.unit}</span>
+                          <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 mt-0.5 flex items-center justify-center transition-all ${
+                            selected ? 'border-amber-400 bg-amber-400' : 'border-neutral-300'
+                          }`}>
                             {selected && (
-                              <span className="text-xs font-semibold text-neutral-600 bg-white rounded-lg px-2 py-0.5 border border-neutral-200">
-                                {cost.toLocaleString('ru-RU')} ₽
-                              </span>
+                              <svg className="w-3 h-3 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"/>
+                              </svg>
                             )}
                           </div>
                         </div>
-                        <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 mt-0.5 flex items-center justify-center transition-all ${
-                          selected ? 'border-amber-400 bg-amber-400' : 'border-neutral-300'
-                        }`}>
-                          {selected && (
-                            <svg className="w-3 h-3 text-white" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"/>
-                            </svg>
-                          )}
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
+                      </motion.div>
+                    );
+                  })}
+                </motion.div>
+              </AnimatePresence>
             </motion.div>
           </div>
 
@@ -226,7 +282,7 @@ export default function CalculatorPage() {
                 {activeServices.length === 0 ? (
                   <p className="text-neutral-400 text-sm text-center py-4">Выберите услуги слева</p>
                 ) : (
-                  <div className="space-y-3 mb-4">
+                  <div className="space-y-3 mb-4 max-h-64 overflow-y-auto pr-1">
                     {activeServices.map(svc => (
                       <div key={svc.id} className="flex justify-between items-start gap-2">
                         <span className="text-sm text-neutral-600 leading-tight flex-1">{svc.name}</span>
@@ -246,6 +302,15 @@ export default function CalculatorPage() {
                     <span className="text-sm font-semibold text-amber-500">{perUnit.toFixed(2)} ₽</span>
                   </div>
                 </div>
+
+                {activeServices.length > 0 && (
+                  <button
+                    onClick={() => setSelectedServices([])}
+                    className="w-full py-2 text-xs text-neutral-400 hover:text-neutral-600 transition-colors mb-2"
+                  >
+                    Очистить выбор
+                  </button>
+                )}
 
                 <button
                   onClick={() => { setSent(false); setShowModal(true); }}
@@ -299,7 +364,7 @@ export default function CalculatorPage() {
                   </div>
 
                   {/* Краткий итог */}
-                  <div className="bg-neutral-50 rounded-xl p-4 mb-5 text-sm space-y-1.5">
+                  <div className="bg-neutral-50 rounded-xl p-4 mb-5 text-sm space-y-1.5 max-h-40 overflow-y-auto">
                     {activeServices.map(svc => (
                       <div key={svc.id} className="flex justify-between text-neutral-600">
                         <span>{svc.name}</span>
