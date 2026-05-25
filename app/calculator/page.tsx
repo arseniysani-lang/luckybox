@@ -6,19 +6,21 @@ import { motion, AnimatePresence } from 'framer-motion';
 type Category = { id: string; name: string; icon: string };
 type Service = { id: string; icon?: string; name: string; desc: string; pricePerUnit: number; unit: string; categoryId?: string };
 
+const PER_UNIT_UNITS = ['ед.', 'шт.', 'лист'];
+
 const defaultServices: Service[] = [
-  { id: 'reception', icon: '📋', name: 'Приёмка и проверка', desc: 'Пересчёт, визуальная проверка упаковки, фото/видео отчёты', pricePerUnit: 14, unit: 'ед.' },
-  { id: 'bubble', icon: '📦', name: 'Упаковка в пупырчатую плёнку', desc: 'Защитная упаковка каждой единицы товара', pricePerUnit: 18, unit: 'ед.' },
-  { id: 'marking', icon: '🏷️', name: 'Двойная маркировка', desc: 'Нанесение штрихкодов и этикеток на товар', pricePerUnit: 8, unit: 'ед.' },
-  { id: 'box', icon: '📫', name: 'Сборка короба', desc: 'Формирование транспортировочного короба, ШК-поставки', pricePerUnit: 80, unit: 'короб' },
+  { id: 'reception', icon: '📋', name: 'Приёмка и проверка', desc: '', pricePerUnit: 14, unit: 'ед.' },
+  { id: 'bubble', icon: '📦', name: 'Упаковка в пупырчатую плёнку', desc: '', pricePerUnit: 18, unit: 'ед.' },
+  { id: 'marking', icon: '🏷️', name: 'Двойная маркировка', desc: '', pricePerUnit: 8, unit: 'ед.' },
+  { id: 'box', icon: '📫', name: 'Сборка короба', desc: '', pricePerUnit: 80, unit: 'короб' },
 ];
 
 const defaultCategories: Category[] = [];
 
 export default function CalculatorPage() {
   const [units, setUnits] = useState(1000);
-  const [boxes, setBoxes] = useState(10);
   const [selectedServices, setSelectedServices] = useState<string[]>(['reception', 'marking']);
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [services, setServices] = useState<Service[]>(defaultServices);
   const [categories, setCategories] = useState<Category[]>(defaultCategories);
   const [activeCategory, setActiveCategory] = useState<string>('all');
@@ -45,14 +47,21 @@ export default function CalculatorPage() {
       .catch(() => {});
   }, []);
 
+  const isPerUnit = (unit: string) => PER_UNIT_UNITS.includes(unit);
+
+  const getQty = (svc: Service) =>
+    isPerUnit(svc.unit) ? units : (quantities[svc.id] ?? 1);
+
   const toggleService = (id: string) => {
     setSelectedServices(prev =>
       prev.includes(id) ? prev.filter(s => s !== id) : [...prev, id]
     );
   };
 
-  const getServiceCost = (svc: Service) =>
-    svc.unit === 'короб' ? svc.pricePerUnit * boxes : svc.pricePerUnit * units;
+  const setQty = (id: string, val: number) =>
+    setQuantities(prev => ({ ...prev, [id]: Math.max(1, val) }));
+
+  const getServiceCost = (svc: Service) => svc.pricePerUnit * getQty(svc);
 
   const visibleServices = activeCategory === 'all'
     ? services
@@ -66,8 +75,11 @@ export default function CalculatorPage() {
     categories.find(c => c.id === catId)?.icon ?? '';
 
   const buildOrderText = () => {
-    const svcLines = activeServices.map(s => `${s.name}: ${getServiceCost(s).toLocaleString('ru-RU')} ₽`).join(', ');
-    return `Здравствуйте! Хочу оформить заявку с калькулятора.\n\nИмя: ${formName}\nТелефон: ${formPhone}\n\nЕдиниц товара: ${units}\nКоробов: ${boxes}\nУслуги: ${svcLines || '—'}\n\nИтого: ${total.toLocaleString('ru-RU')} ₽ (${perUnit.toFixed(2)} ₽/ед.)`;
+    const svcLines = activeServices.map(s => {
+      const qty = getQty(s);
+      return `${s.name} (${qty} ${s.unit}): ${getServiceCost(s).toLocaleString('ru-RU')} ₽`;
+    }).join(', ');
+    return `Здравствуйте! Хочу оформить заявку с калькулятора.\n\nИмя: ${formName}\nТелефон: ${formPhone}\n\nЕдиниц товара: ${units}\nУслуги: ${svcLines || '—'}\n\nИтого: ${total.toLocaleString('ru-RU')} ₽`;
   };
 
   const sendToTelegram = () =>
@@ -140,27 +152,16 @@ export default function CalculatorPage() {
               transition={{ duration: 0.4 }}
             >
               <h2 className="text-lg font-bold text-neutral-900 mb-4">Количество товара</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-neutral-500 mb-1.5">Единиц товара</label>
-                  <input
-                    type="number"
-                    min={1}
-                    value={units}
-                    onChange={e => setUnits(Math.max(1, parseInt(e.target.value) || 1))}
-                    className="w-full border border-neutral-200 rounded-xl px-4 py-3 text-neutral-900 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-amber-300 focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-neutral-500 mb-1.5">Коробов</label>
-                  <input
-                    type="number"
-                    min={1}
-                    value={boxes}
-                    onChange={e => setBoxes(Math.max(1, parseInt(e.target.value) || 1))}
-                    className="w-full border border-neutral-200 rounded-xl px-4 py-3 text-neutral-900 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-amber-300 focus:border-transparent"
-                  />
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-neutral-500 mb-1.5">Единиц товара</label>
+                <input
+                  type="number"
+                  min={1}
+                  value={units}
+                  onChange={e => setUnits(Math.max(1, parseInt(e.target.value) || 1))}
+                  className="w-full border border-neutral-200 rounded-xl px-4 py-3 text-neutral-900 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-amber-300 focus:border-transparent"
+                />
+                <p className="text-xs text-neutral-400 mt-1.5">Для коробок и паллет — укажите количество прямо на карточке услуги</p>
               </div>
             </motion.div>
 
@@ -235,9 +236,6 @@ export default function CalculatorPage() {
                               {catIcon && <span className="text-lg">{catIcon}</span>}
                               <span className="font-semibold text-neutral-900 text-sm leading-tight">{svc.name}</span>
                             </div>
-                            {svc.desc && (
-                              <p className="text-xs text-neutral-400 mb-2 leading-relaxed">{svc.desc}</p>
-                            )}
                             <div className="flex items-center justify-between">
                               <span className="text-amber-500 font-bold text-sm">{svc.pricePerUnit} ₽/{svc.unit}</span>
                               {selected && (
@@ -246,6 +244,18 @@ export default function CalculatorPage() {
                                 </span>
                               )}
                             </div>
+                            {selected && !isPerUnit(svc.unit) && (
+                              <div className="flex items-center gap-2 mt-2" onClick={e => e.stopPropagation()}>
+                                <label className="text-xs text-neutral-500 whitespace-nowrap">Кол-во ({svc.unit}):</label>
+                                <input
+                                  type="number"
+                                  min={1}
+                                  value={quantities[svc.id] ?? 1}
+                                  onChange={e => setQty(svc.id, parseInt(e.target.value) || 1)}
+                                  className="w-20 border border-neutral-300 rounded-lg px-2 py-1 text-sm font-semibold text-neutral-900 focus:outline-none focus:ring-2 focus:ring-amber-300"
+                                />
+                              </div>
+                            )}
                           </div>
                           <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 mt-0.5 flex items-center justify-center transition-all ${
                             selected ? 'border-amber-400 bg-amber-400' : 'border-neutral-300'
@@ -275,7 +285,7 @@ export default function CalculatorPage() {
             >
               <div className="bg-neutral-900 px-6 py-4">
                 <h3 className="text-white font-bold text-lg">Ваш расчёт</h3>
-                <p className="text-neutral-400 text-xs mt-0.5">{units.toLocaleString('ru-RU')} ед. · {boxes} коробов</p>
+                <p className="text-neutral-400 text-xs mt-0.5">{units.toLocaleString('ru-RU')} ед.</p>
               </div>
 
               <div className="p-6">
@@ -285,7 +295,12 @@ export default function CalculatorPage() {
                   <div className="space-y-3 mb-4 max-h-64 overflow-y-auto pr-1">
                     {activeServices.map(svc => (
                       <div key={svc.id} className="flex justify-between items-start gap-2">
-                        <span className="text-sm text-neutral-600 leading-tight flex-1">{svc.name}</span>
+                        <div className="flex-1">
+                          <span className="text-sm text-neutral-600 leading-tight">{svc.name}</span>
+                          {!isPerUnit(svc.unit) && (
+                            <span className="block text-xs text-neutral-400">{getQty(svc)} {svc.unit}</span>
+                          )}
+                        </div>
                         <span className="text-sm font-semibold text-neutral-900 whitespace-nowrap">{getServiceCost(svc).toLocaleString('ru-RU')} ₽</span>
                       </div>
                     ))}
