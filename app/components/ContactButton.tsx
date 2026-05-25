@@ -4,6 +4,12 @@ import Link from 'next/link';
 import { Phone, EnvelopeSimple, TelegramLogo, X, Copy, Check, NotePencil, WhatsappLogo } from "@phosphor-icons/react";
 import { useRouter } from 'next/navigation';
 
+const MaxIcon = ({ size = 20, className = '' }: { size?: number; className?: string; weight?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5.003L2 22l4.997-1.338A9.955 9.955 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zM7 12A5 5 0 1 0 17 12A5 5 0 1 0 7 12Z"/>
+  </svg>
+);
+
 export default function ContactButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -84,6 +90,13 @@ export default function ContactButton() {
       color: 'bg-green-500',
       isLink: true,
       href: 'https://wa.me/79933361405'
+    },
+    {
+      icon: MaxIcon,
+      label: 'Max',
+      color: 'bg-blue-600',
+      isLink: true,
+      href: 'https://max.ru/+79933361405'
     },
     {
       icon: EnvelopeSimple,
