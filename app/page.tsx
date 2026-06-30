@@ -476,7 +476,7 @@ export default function Home() {
       </section>
 
       {/* Этапы работы */}
-      <section className="py-20 md:py-32 bg-gradient-to-b from-white to-neutral-50 relative overflow-hidden">
+      <section id="how-it-works" className="py-20 md:py-32 bg-gradient-to-b from-white to-neutral-50 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/gallery/pattern.png')] opacity-5 animate-pulse"></div>
         <div className="max-w-7xl mx-auto px-4 relative">
           <motion.div

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -170,7 +170,7 @@ export default function ClientLayout({
                   alt="LuckyBox Logo"
                   width={90}
                   height={90}
-                  className="w-[70px] h-[60px] md:w-[85px] md:h-[72px] lg:w-[95px] lg:h-[80px]"
+                  className="w-[70px] h-[60px] md:w-[85px] md:h-[72px] lg:w-[95px] lg:h-[80px] drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]"
                   loading="eager"
                   priority
                   fetchPriority="high"
@@ -220,6 +220,21 @@ export default function ClientLayout({
 
               <div className="flex items-center gap-1 text-white hover:text-gold-200 transition-colors cursor-pointer">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
+                  <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4"/>
+                </svg>
+                <Link
+                  href="/"
+                  data-nav-link="true"
+                  data-hash="#how-it-works"
+                  className="text-sm font-medium text-white hover:text-gold-200 transition-colors"
+                  onClick={(e) => handleNavigation(e, { href: '/', hash: '#how-it-works' })}
+                >
+                  Как это работает
+                </Link>
+              </div>
+
+              <div className="flex items-center gap-1 text-white hover:text-gold-200 transition-colors cursor-pointer">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
                   <path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path>
                 </svg>
                 <Link
@@ -263,7 +278,7 @@ export default function ClientLayout({
                 <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
                   <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.7-8 5.334L4 8.7V6.297l8 5.333 8-5.333V8.7z"/>
                 </svg>
-                Получить уникальный расчёт
+                Рассчитать стоимость
               </button>
             </div>
 
@@ -349,6 +364,22 @@ export default function ClientLayout({
                         <path d="M11 11h2v6h-2zm0-4h2v2h-2z"></path>
                       </svg>
                       О компании
+                    </span>
+                  </Link>
+                </motion.div>
+                <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.25, duration: 0.3 }}>
+                  <Link
+                    href="/"
+                    data-nav-link="true"
+                    data-hash="#how-it-works"
+                    className="block text-white hover:text-gold-200 transition-colors py-3 px-4 text-sm font-medium rounded hover:bg-neutral-800/50 active:bg-neutral-800/70 touch-manipulation"
+                    onClick={(e) => handleNavigation(e, { href: '/', hash: '#how-it-works' })}
+                  >
+                    <span className="flex items-center">
+                      <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
+                        <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4"/>
+                      </svg>
+                      Как это работает
                     </span>
                   </Link>
                 </motion.div>
