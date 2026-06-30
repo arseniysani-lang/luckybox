@@ -314,12 +314,12 @@ export default function Home() {
             />
           </motion.div>
           <motion.h1
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 max-w-4xl"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
-            Фулфилмент для WB, Ozon, Яндекс.Маркет — от 8 ₽/ед.<br className="hidden md:block" /> Склад в Подмосковье, старт за 2 дня
+            Упаковка и фулфилмент
           </motion.h1>
           <motion.p
             className="text-lg md:text-xl text-white max-w-2xl mx-auto mb-8"
@@ -327,7 +327,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.6 }}
           >
-            Полный цикл: приёмка, хранение, упаковка, маркировка, отгрузка
+            Полный цикл работ по упаковыванию различного вида товаров и услуги фулфилмента
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
