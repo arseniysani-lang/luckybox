@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 type Category = { id: string; name: string; icon: string };
@@ -30,6 +30,8 @@ export default function CalculatorPage() {
   const [formPhone, setFormPhone] = useState('');
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+
+  const autoPopupFired = useRef(false);
 
   useEffect(() => {
     fetch(`/calculator-services.json?_=${Date.now()}`, { cache: 'no-store' })
@@ -71,6 +73,18 @@ export default function CalculatorPage() {
   const total = activeServices.reduce((sum, s) => sum + getServiceCost(s), 0);
   const perUnit = units > 0 ? total / units : 0;
 
+  // Автоматически показываем модал при первом появлении суммы
+  useEffect(() => {
+    if (total > 0 && !autoPopupFired.current && !showModal) {
+      autoPopupFired.current = true;
+      const t = setTimeout(() => {
+        setSent(false);
+        setShowModal(true);
+      }, 1500);
+      return () => clearTimeout(t);
+    }
+  }, [total, showModal]);
+
   const getCategoryIcon = (catId: string) =>
     categories.find(c => c.id === catId)?.icon ?? '';
 
@@ -87,7 +101,7 @@ export default function CalculatorPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: formName, phone: formPhone, units, boxes,
+        name: formName, phone: formPhone, units,
         services: activeServices.map(s => ({ name: s.name, cost: getServiceCost(s) })),
         servicesCost: total, total, perUnit: perUnit.toFixed(2),
       }),
@@ -105,6 +119,9 @@ export default function CalculatorPage() {
       email: `mailto:info@luckybox.su?subject=${encodeURIComponent('Заявка с калькулятора')}&body=${encodeURIComponent(text)}`,
     };
     window.open(links[messenger], '_blank');
+    if (typeof window !== 'undefined' && (window as any).ym) {
+      (window as any).ym(109407571, 'reachGoal', 'calculator_form_sent');
+    }
     setSent(true);
     setFormName('');
     setFormPhone('');
@@ -327,13 +344,20 @@ export default function CalculatorPage() {
                   </button>
                 )}
 
-                <button
-                  onClick={() => { setSent(false); setShowModal(true); }}
-                  disabled={activeServices.length === 0}
-                  className="w-full py-3.5 bg-amber-400 hover:bg-amber-500 text-neutral-900 font-bold rounded-xl transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm"
-                >
-                  Оформить заявку →
-                </button>
+                <div className="relative">
+                  {activeServices.length > 0 && (
+                    <span className="absolute inset-0 rounded-xl bg-amber-400/40 animate-ping pointer-events-none" />
+                  )}
+                  <motion.button
+                    onClick={() => { setSent(false); setShowModal(true); }}
+                    disabled={activeServices.length === 0}
+                    animate={activeServices.length > 0 ? { scale: [1, 1.02, 1] } : { scale: 1 }}
+                    transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+                    className="relative w-full py-3.5 bg-amber-400 hover:bg-amber-500 text-neutral-900 font-bold rounded-xl transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm"
+                  >
+                    Оформить заявку →
+                  </motion.button>
+                </div>
                 <p className="text-xs text-neutral-400 text-center mt-3">* Ориентировочные цены. Уточняйте у менеджера.</p>
               </div>
             </motion.div>
@@ -361,9 +385,13 @@ export default function CalculatorPage() {
             >
               {sent ? (
                 <div className="text-center py-6">
-                  <div className="text-5xl mb-4">✅</div>
-                  <h3 className="text-xl font-bold text-neutral-900 mb-2">Заявка отправлена!</h3>
-                  <p className="text-neutral-500 mb-6">Мы свяжемся с вами в ближайшее время.</p>
+                  <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-7 h-7 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m5 13 4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-neutral-900 mb-2">Спасибо!</h3>
+                  <p className="text-neutral-500 mb-6">Менеджер свяжется с вами в течение 15 минут</p>
                   <button
                     onClick={() => setShowModal(false)}
                     className="px-6 py-3 bg-neutral-900 text-white font-semibold rounded-xl hover:bg-neutral-800 transition-colors"

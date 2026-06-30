@@ -1,10 +1,11 @@
-'use client';
+﻿'use client';
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ShoppingCart } from "@phosphor-icons/react";
 import { Icons } from '../../components/Icons';
+import ServiceLeadForm from '../../components/ServiceLeadForm';
 
 // Анимации
 const fadeInUp = {
@@ -337,6 +338,7 @@ export default function FulfillmentPage() {
           </div>
         </div>
       </section>
+      <ServiceLeadForm />
     </main>
   );
 } 

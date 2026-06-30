@@ -6,6 +6,7 @@ import { Icons } from './components/Icons';
 import RollingGallery from './components/RollingGallery';
 import YandexMap from './components/YandexMap';
 import { useState, useEffect, useRef } from 'react';
+import { useLeadModal } from './components/LeadModalContext';
 
 // Интерфейсы для типизации
 interface IconProps {
@@ -53,9 +54,9 @@ const smoothFadeIn = {
   initial: { opacity: 0, y: 20 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-100px" },
-  transition: { 
-    duration: 0.8, 
-    ease: [0.25, 0.1, 0.25, 1.0], // cubic-bezier для более плавной анимации
+  transition: {
+    duration: 0.8,
+    ease: [0.25, 0.1, 0.25, 1.0],
   }
 };
 
@@ -63,22 +64,22 @@ const smoothScaleIn = {
   initial: { opacity: 0, scale: 0.95 },
   whileInView: { opacity: 1, scale: 1 },
   viewport: { once: true, margin: "-100px" },
-  transition: { 
-    duration: 0.8, 
+  transition: {
+    duration: 0.8,
     ease: [0.25, 0.1, 0.25, 1.0],
   }
 };
 
 // Новые 3D анимации
 const cardReveal = {
-  hidden: { 
-    opacity: 0, 
+  hidden: {
+    opacity: 0,
     y: 50,
     rotateX: 10,
     scale: 0.95
   },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     rotateX: 0,
     scale: 1,
@@ -91,23 +92,23 @@ const cardReveal = {
 };
 
 const fadeSlideUp = {
-  hidden: { 
-    opacity: 0, 
+  hidden: {
+    opacity: 0,
     y: 40
   },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: {
       duration: 0.6,
-      ease: [0.22, 1, 0.36, 1] // custom ease
+      ease: [0.22, 1, 0.36, 1]
     }
   }
 };
 
 const staggeredFadeIn = {
   hidden: { opacity: 0 },
-  visible: { 
+  visible: {
     opacity: 1,
     transition: {
       staggerChildren: 0.1
@@ -132,7 +133,7 @@ const staggerContainer = {
 
 // Стили для анимированной линии
 const lineAnimation = {
-  initial: { 
+  initial: {
     background: "linear-gradient(90deg, transparent 0%, var(--gold-200) 50%, transparent 100%)",
     backgroundSize: "200% 100%",
     backgroundPosition: "100% 0"
@@ -180,16 +181,16 @@ function useAppearAnimation() {
 // Компонент для анимированного появления
 function AnimatedItem({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const { ref, isVisible } = useAppearAnimation();
-  
+
   return (
-    <div 
+    <div
       ref={ref}
       className={`transition-all duration-500 ease-out ${
-        isVisible 
-          ? 'opacity-100 translate-y-0' 
+        isVisible
+          ? 'opacity-100 translate-y-0'
           : 'opacity-0 translate-y-8'
       }`}
-      style={{ 
+      style={{
         transitionDelay: `${delay}ms`,
       }}
     >
@@ -202,6 +203,7 @@ export default function Home() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const { scrollY } = useScroll();
   const parallaxY = useTransform(scrollY, [0, 500], [0, 150]);
+  const { openLeadModal } = useLeadModal();
 
   // Следим за скроллом для кнопки "наверх"
   useEffect(() => {
@@ -225,10 +227,10 @@ export default function Home() {
   const scrollToElement = (elementId: string) => {
     const element = document.getElementById(elementId);
     if (element) {
-      const offset = 100; // Высота навбара + дополнительный отступ
+      const offset = 100;
       const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
       const offsetPosition = elementPosition - offset;
-      
+
       window.scrollTo({
         top: offsetPosition,
         behavior: 'smooth'
@@ -273,7 +275,7 @@ export default function Home() {
 
       {/* Hero секция с параллакс эффектом */}
       <section className="relative min-h-screen overflow-hidden">
-        <motion.div 
+        <motion.div
           className="absolute inset-0"
           style={{ y: parallaxY }}
         >
@@ -289,7 +291,7 @@ export default function Home() {
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
           />
         </motion.div>
-        
+
         <div className="relative max-w-7xl mx-auto px-4 min-h-screen flex flex-col items-center justify-center text-center">
           <motion.div
             initial={{ opacity: 0, y: -50 }}
@@ -311,33 +313,40 @@ export default function Home() {
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPj/HwADBwIAMCbHYQAAAABJRU5ErkJggg=="
             />
           </motion.div>
-          <motion.h1 
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4"
+          <motion.h1
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 max-w-4xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
-            Упаковка и фулфилмент
+            Фулфилмент для WB, Ozon, Яндекс.Маркет — от 8 ₽/ед.<br className="hidden md:block" /> Склад в Подмосковье, старт за 2 дня
           </motion.h1>
-          <motion.p 
+          <motion.p
             className="text-lg md:text-xl text-white max-w-2xl mx-auto mb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.6 }}
           >
-            Полный цикл работ по упаковыванию различного вида товаров и услуги фулфилмента
+            Полный цикл: приёмка, хранение, упаковка, маркировка, отгрузка
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.6 }}
+            className="flex flex-col sm:flex-row gap-4 items-center"
           >
-            <Link 
-              href="/contacts" 
-              className="px-6 md:px-8 py-3 bg-gold-200 text-black rounded-lg font-medium hover:bg-gold-300 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            <Link
+              href="/calculator"
+              className="px-6 md:px-8 py-3.5 bg-gold-200 text-black rounded-lg font-semibold hover:bg-gold-300 transition-all duration-300 hover:scale-105 hover:shadow-lg text-sm md:text-base"
             >
-              Связаться с нами
+              Рассчитать стоимость за 2 минуты
             </Link>
+            <button
+              onClick={openLeadModal}
+              className="px-6 md:px-8 py-3.5 bg-white/10 border border-white/40 text-white rounded-lg font-semibold hover:bg-white/20 transition-all duration-300 hover:scale-105 text-sm md:text-base backdrop-blur-sm"
+            >
+              Получить КП бесплатно
+            </button>
           </motion.div>
         </div>
       </section>
@@ -345,7 +354,7 @@ export default function Home() {
       {/* О нас - расширенная версия */}
       <section id="about" className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4">
-          <motion.h2 
+          <motion.h2
             className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12"
             variants={fadeInUp}
             initial="initial"
@@ -375,7 +384,7 @@ export default function Home() {
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
-              
+
               <div className="absolute inset-0 flex flex-col justify-center p-6 md:p-12 max-w-3xl">
                 <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Компания LuckyBox</h3>
                 <p className="text-lg text-white/90 bg-black/30 p-4 rounded-lg backdrop-blur-sm">
@@ -387,7 +396,7 @@ export default function Home() {
 
           {/* Информационные блоки - двухколоночная структура */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <motion.div 
+            <motion.div
               className="space-y-6"
               variants={fadeInLeft}
               initial="initial"
@@ -398,7 +407,7 @@ export default function Home() {
                 <div className="bg-neutral-50 p-5 rounded-lg border-l-4 border-gold-300 shadow-sm">
                   <p>Современный производственный комплекс, расположен в Московской области, обеспечивая обработку до <span className="font-semibold text-gold-500">15 000 заказов</span> ежедневно. Доставка осуществляется по всей России.</p>
                 </div>
-                
+
                 <div className="p-5 rounded-lg">
                   <p className="font-semibold text-gray-800 mb-3">
                     <span className="text-gold-400">LuckyBox</span> предлагает полный цикл фулфилмент-услуг, включая:
@@ -426,8 +435,8 @@ export default function Home() {
                 </div>
               </div>
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               className="space-y-6"
               variants={fadeInRight}
               initial="initial"
@@ -439,7 +448,7 @@ export default function Home() {
                   Компания работает с крупнейшими маркетплейсами: <span className="font-semibold">Wildberries, Ozon, Яндекс.Маркет и МегаМаркет</span>, работая по моделям FBO и FBS.
               </p>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 {[
                   { value: '15+', label: 'лет опыта' },
@@ -492,7 +501,7 @@ export default function Home() {
                 "--gold-200": "#ffd700"
               } as any}
             />
-            
+
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12 relative">
               {[
                 {
@@ -528,8 +537,8 @@ export default function Home() {
                   key={index}
                   className="relative perspective-1000 h-full"
                   initial={{ opacity: 0, rotateY: -50, translateZ: -200 }}
-                  whileInView={{ 
-                    opacity: 1, 
+                  whileInView={{
+                    opacity: 1,
                     rotateY: 0,
                     translateZ: 0,
                     transition: {
@@ -539,7 +548,7 @@ export default function Home() {
                       delay: index * 0.2
                     }
                   }}
-                  whileHover={{ 
+                  whileHover={{
                     transform: "translateY(-8px) rotate(1deg)",
                     transition: { duration: 0.3 }
                   }}
@@ -547,14 +556,14 @@ export default function Home() {
                 >
                   {item.link ? (
                     <Link href={item.link} className="block h-full">
-                      <div className="bg-white rounded-[2rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)] 
+                      <div className="bg-white rounded-[2rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)]
                         group hover:shadow-[0_30px_60px_rgba(0,0,0,0.15)] transition-all duration-500
                         hover:bg-gradient-to-b hover:from-white hover:to-neutral-50 relative overflow-hidden h-full cursor-pointer">
-                        
+
                         {/* Декоративный фоновый элемент */}
-                        <div className="absolute -right-20 -bottom-20 w-40 h-40 bg-gradient-to-br from-gold-200/20 to-gold-300/20 
+                        <div className="absolute -right-20 -bottom-20 w-40 h-40 bg-gradient-to-br from-gold-200/20 to-gold-300/20
                           rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-                        
+
                         {/* Номер этапа */}
                         <div className="absolute top-6 right-6">
                           <div className="text-6xl font-black text-neutral-100 group-hover:text-gold-200/20 transition-colors duration-500">
@@ -563,12 +572,12 @@ export default function Home() {
                         </div>
 
                         {/* Иконка */}
-                        <motion.div 
+                        <motion.div
                           className="relative z-10 mb-8"
                           whileHover={{ scale: 1.1 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <div className="w-16 h-16 bg-gradient-to-br from-gold-200 to-gold-300 
+                          <div className="w-16 h-16 bg-gradient-to-br from-gold-200 to-gold-300
                             rounded-2xl rotate-3 group-hover:rotate-6 transition-transform duration-500
                             flex items-center justify-center shadow-lg">
                             <item.Icon className="w-8 h-8 text-white" />
@@ -584,19 +593,19 @@ export default function Home() {
                         </div>
 
                         {/* Декоративная линия */}
-                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent 
+                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent
                           via-gold-200 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                       </div>
                     </Link>
                   ) : (
-                  <div className="bg-white rounded-[2rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)] 
+                  <div className="bg-white rounded-[2rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)]
                     group hover:shadow-[0_30px_60px_rgba(0,0,0,0.15)] transition-all duration-500
                     hover:bg-gradient-to-b hover:from-white hover:to-neutral-50 relative overflow-hidden h-full">
-                    
+
                     {/* Декоративный фоновый элемент */}
-                    <div className="absolute -right-20 -bottom-20 w-40 h-40 bg-gradient-to-br from-gold-200/20 to-gold-300/20 
+                    <div className="absolute -right-20 -bottom-20 w-40 h-40 bg-gradient-to-br from-gold-200/20 to-gold-300/20
                       rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-                    
+
                     {/* Номер этапа */}
                     <div className="absolute top-6 right-6">
                       <div className="text-6xl font-black text-neutral-100 group-hover:text-gold-200/20 transition-colors duration-500">
@@ -605,12 +614,12 @@ export default function Home() {
                     </div>
 
                     {/* Иконка */}
-                    <motion.div 
+                    <motion.div
                       className="relative z-10 mb-8"
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div className="w-16 h-16 bg-gradient-to-br from-gold-200 to-gold-300 
+                      <div className="w-16 h-16 bg-gradient-to-br from-gold-200 to-gold-300
                         rounded-2xl rotate-3 group-hover:rotate-6 transition-transform duration-500
                         flex items-center justify-center shadow-lg">
                         <item.Icon className="w-8 h-8 text-white" />
@@ -626,7 +635,7 @@ export default function Home() {
                     </div>
 
                     {/* Декоративная линия */}
-                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent 
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent
                       via-gold-200 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                   </div>
                   )}
@@ -645,7 +654,7 @@ export default function Home() {
           <div className="absolute w-[600px] h-[600px] -left-[300px] -bottom-[300px] bg-gradient-to-tr from-gold-200/10 to-gold-300/5 rounded-full blur-3xl"></div>
           <div className="absolute w-full h-40 bg-gradient-to-r from-gold-200/5 via-gold-300/10 to-gold-200/5 -skew-y-3 top-64 transform-gpu"></div>
         </div>
-        
+
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <motion.div
             className="text-center mb-12 md:mb-20"
@@ -662,7 +671,7 @@ export default function Home() {
               Многолетний опыт и современные технологии позволяют нам обеспечивать высочайшее качество упаковки
             </p>
           </motion.div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {[
               {
@@ -709,15 +718,15 @@ export default function Home() {
                 icon: item.icon,
                 gradient: item.color
               };
-              
+
               return (
-              <motion.div 
-                key={index} 
+              <motion.div
+                key={index}
                   initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ 
+                  whileInView={{
                     opacity: 1,
                     y: 0,
-                    transition: { 
+                    transition: {
                       duration: 0.5,
                       delay: index * 0.1,
                       type: "spring",
@@ -753,13 +762,13 @@ export default function Home() {
       {/* Услуги */}
       <section id="services" className="py-16 md:py-24 bg-white relative">
         <div className="absolute inset-0 bg-[url('/gallery/back.png')] opacity-40 bg-cover bg-center"></div>
-        
+
         {/* Декоративные элементы для фона */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {/* Круги */}
           <div className="absolute w-[600px] h-[600px] -right-[200px] top-[5%] bg-gradient-to-br from-gold-200/15 to-gold-300/10 rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute w-[500px] h-[500px] -left-[150px] top-[30%] bg-gradient-to-tr from-gold-200/15 to-gold-300/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-          
+
           {/* Волнистые линии */}
           <svg className="absolute top-0 left-0 w-full h-full opacity-20" viewBox="0 0 1000 1000" xmlns="https://www.w3.org/2000/svg">
             <path d="M0,200 Q250,250 500,200 T1000,200" fill="none" stroke="#FFD700" strokeWidth="3" />
@@ -767,10 +776,10 @@ export default function Home() {
             <path d="M0,600 Q250,650 500,600 T1000,600" fill="none" stroke="#FFD700" strokeWidth="3" />
             <path d="M0,800 Q250,850 500,800 T1000,800" fill="none" stroke="#FFD700" strokeWidth="3" />
           </svg>
-          
+
           {/* Точки */}
           <div className="absolute inset-0 bg-[radial-gradient(#FFD700_1.5px,transparent_1.5px)] bg-[length:25px_25px] opacity-15"></div>
-          
+
           {/* Иконки услуг в фоне */}
           <div className="absolute top-[15%] right-[10%] text-gold-200/20 transform rotate-12">
             <Icons.Package className="w-24 md:w-48 h-24 md:h-48" />
@@ -785,7 +794,7 @@ export default function Home() {
             <Icons.Mark className="w-16 md:w-32 h-16 md:h-32" />
           </div>
         </div>
-        
+
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <AnimatedItem>
             <div className="text-center">
@@ -828,165 +837,88 @@ export default function Home() {
                 title: "Термоусадка",
                 description: "Применение термоусадочной технологии для защиты и группировки товаров",
                 items: [
-                  "Штучная",
-                  "Групповая"
+                  "Штучного товара",
+                  "Наборов",
+                  "Коробов"
                 ],
                 link: '/services/shrink-wrap'
               },
               {
-                icon: Icons.Cube,
-                title: "Упаковка продукции для маркетплейса",
-                description: "Профессиональная упаковка товаров согласно требованиям площадок, включая Wildberries, Ozon и Яндекс.Маркет",
+                icon: Icons.ShoppingCart,
+                title: "Услуги фулфилмента",
+                description: "Полный цикл услуг для выхода на маркетплейсы: от приемки до отгрузки",
                 items: [
-                  "Для Wildberries",
-                  "Для Ozon",
-                  "Для Яндекс.Маркет",
-                  "Для других маркетплейсов"
+                  "Wildberries",
+                  "Ozon",
+                  "Яндекс.Маркет",
+                  "МегаМаркет"
                 ],
-                link: '/services/marketplace'
+                link: '/services/fulfillment'
               },
               {
-                icon: Icons.Additional,
-                title: "Вклейка/вложение пробников",
-                description: "Интеграция пробников и образцов в различные типы продукции",
+                icon: Icons.Cube,
+                title: "Образцы и пробники",
+                description: "Производство и упаковка образцов и пробников для маркетинговых целей",
                 items: [
-                  "В печатную продукцию",
-                  "В наборы",
-                  "В промо-продукт"
+                  "Формирование наборов образцов",
+                  "Упаковку пробников",
+                  "Маркировку образцов"
                 ],
                 link: '/services/samples'
               },
               {
-                icon: Icons.ShoppingCart,
-                title: "Услуги фулфилмента",
-                description: "Комплексные решения по обработке и доставке товаров, включая упаковку, хранение и распределение",
+                icon: Icons.CheckCircle,
+                title: "Услуги для маркетплейсов",
+                description: "Подготовка товаров к размещению на маркетплейсах",
                 items: [
-                  "Прием и обработка товаров",
-                  "Хранение и учет",
-                  "Комплектация заказов",
-                  "Доставка и отгрузка"
+                  "Подготовку товаров",
+                  "Оформление поставок",
+                  "Маркировку"
                 ],
-                link: '/services/fulfillment'
+                link: '/services/marketplace'
               }
             ].map((service, index) => (
               <AnimatedItem key={index} delay={index * 100}>
-                <Link href={service.link} className="block group cursor-pointer">
-                  <div className="bg-white/60 backdrop-blur-sm rounded-xl shadow-md group-hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
-                  <div className="flex flex-col md:flex-row">
-                    <div className="md:w-1/3 bg-gradient-to-br from-gold-100/70 to-gold-50/70 p-4 md:p-6 flex flex-col justify-center backdrop-blur-sm">
-                      <div className="flex items-center mb-4">
-                        <div className="min-w-[44px] md:min-w-[56px] w-11 md:w-14 h-11 md:h-14 bg-gradient-to-br from-gold-200 to-gold-300 rounded-xl flex items-center justify-center shadow-md">
-                          <service.icon className="w-6 md:w-7 h-6 md:h-7 text-white" />
-                        </div>
-                        <h3 className="text-xl md:text-2xl font-bold ml-3 md:ml-4 text-gray-800">{service.title}</h3>
-                      </div>
-                      <p className="text-gray-700 text-sm md:text-base">{service.description}</p>
+                <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-6 md:gap-12 items-center`}>
+                  <div className="w-full md:w-1/2">
+                    <div className="bg-gradient-to-br from-gold-200/20 to-gold-300/20 rounded-xl md:rounded-2xl aspect-video flex items-center justify-center">
+                      <service.icon className="w-20 md:w-32 h-20 md:h-32 text-gold-400" />
                     </div>
-                    
-                    <div className="md:w-2/3 p-4 md:p-6 bg-white/70 backdrop-blur-sm">
-                      {service.items ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                          {service.items.map((item: string, idx: number) => (
-                            <div key={idx} className="flex items-center bg-neutral-50/60 backdrop-blur-sm p-3 rounded-lg">
-                              <span className="w-3 h-3 bg-gold-200 rounded-full mr-3 flex-shrink-0"></span>
-                              <span className="text-gray-700">{item}</span>
-                            </div>
-                          ))}
-                          
-                          {service.link && (
-                            <div className="col-span-full mt-4 text-center">
-                              <Link 
-                                href={service.link} 
-                                className="inline-block mt-3 px-4 py-2 bg-gold-200 text-black rounded-lg text-sm font-medium hover:bg-gold-300 transition-all duration-300"
-                                  onClick={(e) => e.stopPropagation()}
-                              >
-                                Подробнее об услуге
-                              </Link>
-                            </div>
-                          )}
-                        </div>
-                      ) : (
-                        <div className="flex items-center justify-center h-full">
-                          <div className="bg-neutral-50/60 backdrop-blur-sm p-4 rounded-lg w-full text-center">
-                            <p className="text-gray-700 font-medium">Свяжитесь с нами для получения подробной информации</p>
-                            <Link 
-                              href="/contacts" 
-                              className="inline-block mt-3 px-4 py-2 bg-gold-200 text-black rounded-lg text-sm font-medium hover:bg-gold-300 transition-all duration-300"
-                                onClick={(e) => e.stopPropagation()}
-                            >
-                              Узнать больше
-                            </Link>
+                  </div>
+                  <div className="w-full md:w-1/2">
+                    <div className="flex items-center gap-3 mb-3 md:mb-4">
+                      <div className="p-2 md:p-3 rounded-lg bg-gold-200">
+                        <service.icon className="w-5 h-5 md:w-7 md:h-7 text-black" />
                       </div>
-                        </div>
-                      )}
+                      <h3 className="text-xl md:text-2xl font-bold">{service.title}</h3>
                     </div>
+                    <p className="text-sm md:text-base text-neutral-700 mb-4">{service.description}</p>
+                    <div className="bg-neutral-50 p-4 rounded-lg md:rounded-xl mb-4 md:mb-6">
+                      <h4 className="text-base font-semibold mb-2 md:mb-3">Что включает:</h4>
+                      <ul className="space-y-1.5 md:space-y-2">
+                        {service.items.map((item, idx) => (
+                          <li key={idx} className="flex items-center gap-2 text-sm md:text-base">
+                            <span className="w-2 h-2 bg-gold-200 rounded-full flex-shrink-0"></span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <Link
+                        href={service.link}
+                        className="inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-2.5 bg-gold-200 text-black rounded-lg font-medium hover:bg-gold-300 transition-colors text-sm md:text-base"
+                      >
+                        Подробнее
+                        <svg className="w-3.5 h-3.5 md:w-4 md:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                  </div>
                   </div>
                 </div>
-                </Link>
               </AnimatedItem>
             ))}
-          </div>
-
-          {/* Дополнительные услуги */}
-          <div>
-            <AnimatedItem>
-              <div className="text-center mb-12">
-                <h3 className="text-3xl font-bold mb-4">Дополнительные услуги</h3>
-                <div className="w-20 h-1 bg-gold-200 mx-auto rounded-full"></div>
-              </div>
-            </AnimatedItem>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {[
-                {
-                  icon: Icons.Warehouse,
-                  title: "Временное хранение",
-                  description: "Надежное хранение ваших товаров, бесплатно до 7 дней"
-                },
-                {
-                  icon: Icons.Truck,
-                  title: "Транспортировка",
-                  description: "Доставка до пункта назначения"
-                },
-                {
-                  icon: Icons.Cube,
-                  title: "Заказ комплектующих",
-                  description: "Помощь в подборе материалов"
-                },
-                {
-                  icon: Icons.Handshake,
-                  title: "Разработка ПромоАкции",
-                  description: "Создание эффективных акций"
-                }
-              ].map((service, index) => (
-                <AnimatedItem key={index} delay={index * 80}>
-                  <div className="bg-gradient-to-br from-white/60 to-neutral-50/60 backdrop-blur-sm rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gold-100 group h-full">
-                    <div className="p-6 flex items-start">
-                      <div className="flex-shrink-0 mr-5">
-                        <div className="min-w-[64px] w-16 h-16 bg-gradient-to-br from-gold-200 to-gold-300 rounded-xl flex items-center justify-center shadow-md transform -rotate-3 group-hover:rotate-3 transition-transform duration-300">
-                          <service.icon className="w-8 h-8 text-white" />
-                        </div>
-                      </div>
-                      <div>
-                        <h4 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-gold-500 transition-colors duration-300">{service.title}</h4>
-                        <p className="text-gray-600">{service.description}</p>
-                        <div className="mt-4">
-                          <Link 
-                            href="/contacts" 
-                            className="inline-flex items-center text-gold-500 font-medium hover:text-gold-600 transition-colors duration-300"
-                          >
-                            <span>Подробнее</span>
-                            <svg xmlns="https://www.w3.org/2000/svg" className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                          </Link>
-                      </div>
-                      </div>
-                    </div>
-                  </div>
-                </AnimatedItem>
-              ))}
-            </div>
           </div>
         </div>
       </section>
@@ -997,7 +929,7 @@ export default function Home() {
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute w-[600px] h-[600px] -right-[300px] -top-[300px] bg-gradient-to-br from-gold-200/5 to-gold-300/5 rounded-full blur-3xl"></div>
           <div className="absolute w-[400px] h-[400px] -left-[200px] -bottom-[200px] bg-gradient-to-tr from-gold-200/5 to-gold-300/5 rounded-full blur-3xl"></div>
-          
+
           {/* Волнистые линии */}
           <svg className="absolute bottom-0 left-0 w-full h-40 opacity-10" viewBox="0 0 1000 200" xmlns="https://www.w3.org/2000/svg">
             <path d="M0,100 Q250,150 500,100 T1000,100" fill="none" stroke="#FFD700" strokeWidth="2" />
@@ -1005,7 +937,7 @@ export default function Home() {
             <path d="M0,150 Q250,200 500,150 T1000,150" fill="none" stroke="#FFD700" strokeWidth="2" />
           </svg>
         </div>
-        
+
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <motion.div
             className="text-center mb-10 md:mb-16"
@@ -1022,41 +954,37 @@ export default function Home() {
               Официальное партнерство с ведущими маркетплейсами позволяет нам обеспечивать эффективную интеграцию и оптимальные условия для наших клиентов
             </p>
           </motion.div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-16">
             {[
-              { 
-                name: 'Ozon', 
-                logo: '/partners/ozon.svg', 
+              {
+                name: 'Ozon',
                 color: 'from-blue-500/10 to-blue-600/5',
-                description: 'Один из крупнейших маркетплейсов России с миллионами товаров'
+                description: 'Один из крупнейших маркетплейсов России'
               },
-              { 
-                name: 'Wildberries', 
-                logo: '/partners/wildberries.svg', 
+              {
+                name: 'Wildberries',
                 color: 'from-purple-500/10 to-purple-600/5',
-                description: 'Лидирующий онлайн-ритейлер с широким ассортиментом товаров'
+                description: 'Лидирующий онлайн-ритейлер России'
               },
-              { 
-                name: 'Яндекс.Маркет', 
-                logo: '/partners/yandex.svg', 
+              {
+                name: 'Яндекс.Маркет',
                 color: 'from-yellow-500/10 to-yellow-600/5',
-                description: 'Популярный сервис для выбора товаров и сравнения цен'
+                description: 'Популярный сервис для покупок'
               },
-              { 
-                name: 'МегаМаркет', 
-                logo: '/partners/megamarket.svg', 
+              {
+                name: 'МегаМаркет',
                 color: 'from-red-500/10 to-red-600/5',
-                description: 'Быстрорастущая платформа электронной коммерции с широким охватом'
+                description: 'Быстрорастущая торговая площадка'
               }
             ].map((partner, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ 
+                whileInView={{
                   opacity: 1,
                   y: 0,
-                  transition: { 
+                  transition: {
                     duration: 0.5,
                     delay: index * 0.1,
                     type: "spring",
@@ -1064,33 +992,85 @@ export default function Home() {
                   }
                 }}
                 whileHover={{
-                  y: -10,
+                  y: -6,
                   transition: { duration: 0.3 }
                 }}
                 viewport={{ once: true }}
                 className="h-full"
               >
-                <div className={`bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 h-full overflow-hidden border border-gold-100 p-6 flex flex-col items-center text-center group`}>
-                  <div className={`w-full h-24 mb-6 flex items-center justify-center rounded-xl bg-gradient-to-br ${partner.color} p-4 group-hover:scale-105 transition-transform duration-300`}>
-                    <div className="text-2xl font-bold text-gray-700">{partner.name}</div>
-                </div>
-                  <p className="text-gray-600 mb-4">{partner.description}</p>
-                  <div className="mt-auto">
+                <div className={`bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 h-full overflow-hidden border border-gold-100 p-4 md:p-6 flex flex-col items-center text-center group`}>
+                  <div className={`w-full h-16 md:h-20 mb-3 md:mb-4 flex items-center justify-center rounded-xl bg-gradient-to-br ${partner.color} p-3 group-hover:scale-105 transition-transform duration-300`}>
+                    <div className="text-lg md:text-xl font-bold text-gray-700">{partner.name}</div>
                   </div>
-                  <div className="h-1 w-full bg-gradient-to-r from-transparent via-gold-300 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 mt-4"></div>
+                  <p className="text-gray-600 text-xs md:text-sm">{partner.description}</p>
+                  <div className="h-1 w-full bg-gradient-to-r from-transparent via-gold-300 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 mt-3 md:mt-4"></div>
                 </div>
               </motion.div>
             ))}
           </div>
-          
 
+          {/* Отзывы клиентов */}
+          <motion.div
+            className="text-center mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="inline-block px-4 md:px-6 py-2 bg-gradient-to-r from-gold-200 to-gold-300 text-black rounded-full mb-3 font-medium shadow-md text-sm md:text-base">
+              ОТЗЫВЫ
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3">Что говорят клиенты</h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                name: 'Алексей М.',
+                role: 'Продавец WB, товары для кухни',
+                text: 'Работаем с LuckyBox уже 8 месяцев. Отличная скорость обработки — заказы уходят день в день. Цены честные, ничего лишнего не насчитывают. Рекомендую.',
+              },
+              {
+                name: 'Светлана К.',
+                role: 'Бренд косметики, Ozon',
+                text: 'Наконец нашли надёжного партнёра для маркировки и упаковки. Стартовали за 2 дня, никаких задержек. Менеджер всегда на связи — это дорогого стоит.',
+              },
+              {
+                name: 'Дмитрий Р.',
+                role: 'Поставщик Яндекс.Маркет',
+                text: 'Перешли от другого ФФ из-за брака при упаковке. Здесь — ноль рекламаций за 5 месяцев. Склад чистый, процессы выстроены. Будем работать дальше.',
+              },
+            ].map((review, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-white rounded-2xl p-6 shadow-md border border-gold-100 flex flex-col"
+              >
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-gray-700 text-sm leading-relaxed mb-4 flex-1">{review.text}</p>
+                <div className="border-t border-neutral-100 pt-4">
+                  <p className="font-semibold text-neutral-900">{review.name}</p>
+                  <p className="text-xs text-neutral-500">{review.role}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* CTA секция */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4">
-          <motion.div 
+          <motion.div
             className="text-center"
             variants={fadeInUp}
             initial="initial"
@@ -1101,23 +1081,33 @@ export default function Home() {
             <p className="text-gray-600 mb-6 md:mb-8 max-w-2xl mx-auto text-sm md:text-base">
               Свяжитесь с нами, и мы поможем реализовать ваши идеи наилучшим образом
             </p>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link 
-                href="/contacts" 
-                className="inline-block px-6 md:px-8 py-2 md:py-3 bg-gold-200 text-black rounded-lg font-medium hover:bg-gold-300 transition-all duration-300 hover:shadow-lg text-sm md:text-base"
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                Связаться с нами
-              </Link>
-            </motion.div>
+                <Link
+                  href="/calculator"
+                  className="inline-block px-6 md:px-8 py-2 md:py-3 bg-gold-200 text-black rounded-lg font-medium hover:bg-gold-300 transition-all duration-300 hover:shadow-lg text-sm md:text-base"
+                >
+                  Рассчитать стоимость
+                </Link>
+              </motion.div>
+              <motion.button
+                onClick={openLeadModal}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-6 md:px-8 py-2 md:py-3 border-2 border-neutral-200 text-neutral-700 rounded-lg font-medium hover:border-gold-300 hover:text-gold-500 transition-all duration-300 text-sm md:text-base"
+              >
+                Получить КП бесплатно
+              </motion.button>
+            </div>
           </motion.div>
         </div>
       </section>
 
       {/* Карта */}
-      <motion.section 
+      <motion.section
         className="relative bg-white"
         variants={fadeInUp}
         initial="initial"

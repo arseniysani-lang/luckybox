@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
@@ -7,6 +7,7 @@ import React from 'react';
 
 // Импорт компонентов и утилит
 import { Icons } from '../../components/Icons';
+import ServiceLeadForm from '../../components/ServiceLeadForm';
 
 // Определение анимаций
 const fadeInLeft = {
@@ -289,6 +290,7 @@ export default function MarketplacePage() {
           </div>
         </div>
       </section>
+      <ServiceLeadForm />
     </main>
   );
 } 

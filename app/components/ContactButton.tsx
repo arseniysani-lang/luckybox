@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
@@ -34,10 +36,8 @@ export default function ContactButton() {
 
     try {
       if (navigator.clipboard && window.isSecureContext) {
-        // Для современных браузеров
         await navigator.clipboard.writeText(text);
       } else {
-        // Fallback для старых браузеров
         const textArea = document.createElement("textarea");
         textArea.value = text;
         textArea.style.position = "fixed";
@@ -49,8 +49,7 @@ export default function ContactButton() {
         document.execCommand('copy');
         textArea.remove();
       }
-      
-      // Показываем индикатор успешного копирования
+
       setCopiedStates({ ...copiedStates, [key]: true });
       setTimeout(() => {
         setCopiedStates({ ...copiedStates, [key]: false });
@@ -111,7 +110,7 @@ export default function ContactButton() {
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.div 
+        <motion.div
           className="fixed bottom-8 right-8 z-50"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -139,7 +138,7 @@ export default function ContactButton() {
                         <option.icon size={20} weight="bold" className="text-white" />
                       </div>
                       {option.isLink ? (
-                        <Link 
+                        <Link
                           href={option.href || '/contacts'}
                           target={option.href?.startsWith('http') ? '_blank' : undefined}
                           rel={option.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
@@ -176,32 +175,37 @@ export default function ContactButton() {
             )}
           </AnimatePresence>
 
-          <motion.button
-            onClick={() => setIsOpen(!isOpen)}
-            className={`${
-              isOpen ? 'bg-neutral-900' : 'bg-gold-200'
-            } h-14 rounded-full shadow-lg flex items-center justify-center gap-3 px-6 group transition-colors duration-300`}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {isOpen ? (
-              <>
-                <X size={24} weight="bold" className="text-white" />
-                <span className="text-white font-medium">Закрыть</span>
-              </>
-            ) : (
-              <>
-                <Phone 
-                  size={24} 
-                  weight="bold" 
-                  className="text-neutral-900 group-hover:scale-110 transition-transform" 
-                />
-                <span className="text-neutral-900 font-medium whitespace-nowrap">Связаться с нами</span>
-              </>
+          <div className="relative">
+            {!isOpen && (
+              <span className="absolute inset-0 rounded-full bg-amber-400/50 animate-ping pointer-events-none" />
             )}
-          </motion.button>
+            <motion.button
+              onClick={() => setIsOpen(!isOpen)}
+              className={`${
+                isOpen ? 'bg-neutral-900' : 'bg-gold-200'
+              } relative h-14 rounded-full shadow-lg flex items-center justify-center gap-3 px-6 group transition-colors duration-300`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {isOpen ? (
+                <>
+                  <X size={24} weight="bold" className="text-white" />
+                  <span className="text-white font-medium">Закрыть</span>
+                </>
+              ) : (
+                <>
+                  <Phone
+                    size={24}
+                    weight="bold"
+                    className="text-neutral-900 group-hover:scale-110 transition-transform"
+                  />
+                  <span className="text-neutral-900 font-medium whitespace-nowrap">Получить расчёт</span>
+                </>
+              )}
+            </motion.button>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
   );
-} 
+}

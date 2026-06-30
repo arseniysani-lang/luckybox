@@ -4,6 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import ContactButton from './ContactButton';
+import LeadModal from './LeadModal';
+import { LeadModalContext } from './LeadModalContext';
 import { List, X } from "@phosphor-icons/react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
@@ -15,6 +17,7 @@ export default function ClientLayout({
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showLeadModal, setShowLeadModal] = useState(false);
   const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isNavigatingRef = useRef(false);
   const router = useRouter();
@@ -154,7 +157,7 @@ export default function ClientLayout({
   ];
 
   return (
-    <>
+    <LeadModalContext.Provider value={{ openLeadModal: () => setShowLeadModal(true) }}>
       {/* Навигация */}
       <nav className="fixed w-full top-0 z-50 transition-colors duration-300 border-b bg-neutral-900/60 backdrop-blur-sm border-neutral-800/20">
         <div className="max-w-7xl mx-auto px-4">
@@ -253,16 +256,15 @@ export default function ClientLayout({
                 <span className="text-sm font-medium">+7 993 336 1405</span>
               </a>
 
-              <Link
-                href="/contacts"
+              <button
+                onClick={() => setShowLeadModal(true)}
                 className="px-6 py-3 bg-gold-200 text-black text-sm font-medium rounded-md hover:bg-gold-300 transition-colors duration-200 flex items-center"
-                onClick={() => setIsMobileMenuOpen(false)}
               >
                 <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
                   <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.7-8 5.334L4 8.7V6.297l8 5.333 8-5.333V8.7z"/>
                 </svg>
-                Связаться с нами
-              </Link>
+                Получить КП
+              </button>
             </div>
 
             {/* Мобильная кнопка меню */}
@@ -384,19 +386,18 @@ export default function ClientLayout({
                   <div className="mt-3 pt-3 border-t border-gray-200">
                     <div className="grid grid-cols-1 gap-2 my-3">
                       <Link
-                        href="/contacts"
+                        href="/calculator"
                         className="block w-full text-center px-3 py-4 bg-gold-100 text-black text-sm rounded font-medium hover:bg-gold-200 active:bg-gold-300 transition-colors duration-200 touch-manipulation"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
-                        Заказать звонок
+                        Рассчитать стоимость
                       </Link>
-                      <Link
-                        href="/contacts"
+                      <button
                         className="block w-full text-center px-3 py-4 bg-gold-400 text-black text-sm rounded font-medium hover:bg-gold-500 active:bg-gold-600 transition-colors duration-200 touch-manipulation"
-                        onClick={() => setIsMobileMenuOpen(false)}
+                        onClick={() => { setIsMobileMenuOpen(false); setShowLeadModal(true); }}
                       >
-                        Связаться с нами
-                      </Link>
+                        Получить КП бесплатно
+                      </button>
                     </div>
                   </div>
                 </motion.div>
@@ -412,6 +413,8 @@ export default function ClientLayout({
       </div>
 
       <ContactButton />
+
+      <LeadModal isOpen={showLeadModal} onClose={() => setShowLeadModal(false)} />
 
       {/* Футер */}
       <footer className="bg-white border-t border-neutral-200 py-8 md:py-10 lg:py-12 relative z-10 mt-8 md:mt-10 lg:mt-12 shadow-[0_0_15px_rgba(0,0,0,0.1)]">
@@ -454,6 +457,6 @@ export default function ClientLayout({
           </div>
         </div>
       </footer>
-    </>
+    </LeadModalContext.Provider>
   );
 }
