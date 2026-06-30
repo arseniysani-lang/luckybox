@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -31,7 +31,7 @@ export default function LeadModal({ isOpen, onClose }: Props) {
           servicesCost: 0,
           total: 0,
           perUnit: '0',
-          source: 'Заявка «Получить КП» с сайта',
+          source: 'Заявка «Получить уникальный расчёт» с сайта',
         }),
       });
     } catch {}
@@ -93,7 +93,7 @@ export default function LeadModal({ isOpen, onClose }: Props) {
               </div>
             ) : (
               <>
-                <h2 className="text-xl md:text-2xl font-bold text-neutral-900 mb-1">Получить КП бесплатно</h2>
+                <h2 className="text-xl md:text-2xl font-bold text-neutral-900 mb-1">Получить уникальный расчёт</h2>
                 <p className="text-neutral-500 text-sm mb-6">Ответим в течение 15 минут в рабочее время</p>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
@@ -345,7 +345,7 @@ export default function Home() {
               onClick={openLeadModal}
               className="px-6 md:px-8 py-3.5 bg-white/10 border border-white/40 text-white rounded-lg font-semibold hover:bg-white/20 transition-all duration-300 hover:scale-105 text-sm md:text-base backdrop-blur-sm"
             >
-              Получить КП бесплатно
+              Получить уникальный расчёт
             </button>
           </motion.div>
         </div>
@@ -1099,7 +1099,7 @@ export default function Home() {
                 whileTap={{ scale: 0.95 }}
                 className="px-6 md:px-8 py-2 md:py-3 border-2 border-neutral-200 text-neutral-700 rounded-lg font-medium hover:border-gold-300 hover:text-gold-500 transition-all duration-300 text-sm md:text-base"
               >
-                Получить КП бесплатно
+                Получить уникальный расчёт
               </motion.button>
             </div>
           </motion.div>

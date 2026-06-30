@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -263,7 +263,7 @@ export default function ClientLayout({
                 <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
                   <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.7-8 5.334L4 8.7V6.297l8 5.333 8-5.333V8.7z"/>
                 </svg>
-                Получить КП
+                Получить уникальный расчёт
               </button>
             </div>
 
@@ -396,7 +396,7 @@ export default function ClientLayout({
                         className="block w-full text-center px-3 py-4 bg-gold-400 text-black text-sm rounded font-medium hover:bg-gold-500 active:bg-gold-600 transition-colors duration-200 touch-manipulation"
                         onClick={() => { setIsMobileMenuOpen(false); setShowLeadModal(true); }}
                       >
-                        Получить КП бесплатно
+                        Получить уникальный расчёт
                       </button>
                     </div>
                   </div>
