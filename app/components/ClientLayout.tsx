@@ -177,17 +177,17 @@ export default function ClientLayout({
                   sizes="(max-width: 640px) 70px, (max-width: 768px) 85px, 95px"
                   quality={90}
                 />
-                <div className="ml-2 md:ml-3 lg:ml-4">
-                  <div className="text-white text-xs md:text-sm font-medium">Профессиональные решения</div>
-                  <div className="text-neutral-200 text-xs block">для упаковки вашей продукции</div>
+                <div className="ml-2 md:ml-3 lg:ml-4 hidden xl:block">
+                  <div className="text-white text-xs font-medium whitespace-nowrap">Профессиональные решения</div>
+                  <div className="text-neutral-200 text-xs whitespace-nowrap">для упаковки вашей продукции</div>
                 </div>
               </Link>
             </div>
 
             {/* Навигационное меню */}
-            <div className="hidden lg:flex items-center gap-8">
-              <div className="flex items-center gap-1 text-white hover:text-gold-200 transition-colors cursor-pointer">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
+            <div className="hidden lg:flex items-center gap-4">
+              <div className="flex items-center gap-1 text-white hover:text-gold-200 transition-colors cursor-pointer whitespace-nowrap">
+                <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
                   <path d="M20 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM4 19V5h16l.002 14H4z"></path>
                   <path d="M6 7h12v2H6zm0 4h12v2H6zm0 4h6v2H6z"></path>
                 </svg>
@@ -195,15 +195,15 @@ export default function ClientLayout({
                   href="/"
                   data-nav-link="true"
                   data-hash="#services"
-                  className="text-sm font-medium text-white hover:text-gold-200 transition-colors"
+                  className="text-sm font-medium text-white hover:text-gold-200 transition-colors whitespace-nowrap"
                   onClick={(e) => handleNavigation(e, { href: '/', hash: '#services' })}
                 >
                   Наши услуги
                 </Link>
               </div>
 
-              <div className="flex items-center gap-1 text-white hover:text-gold-200 transition-colors cursor-pointer">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
+              <div className="flex items-center gap-1 text-white hover:text-gold-200 transition-colors cursor-pointer whitespace-nowrap">
+                <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
                   <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path>
                   <path d="M11 11h2v6h-2zm0-4h2v2h-2z"></path>
                 </svg>
@@ -211,50 +211,50 @@ export default function ClientLayout({
                   href="/"
                   data-nav-link="true"
                   data-hash="#about"
-                  className="text-sm font-medium text-white hover:text-gold-200 transition-colors"
+                  className="text-sm font-medium text-white hover:text-gold-200 transition-colors whitespace-nowrap"
                   onClick={(e) => handleNavigation(e, { href: '/', hash: '#about' })}
                 >
                   О компании
                 </Link>
               </div>
 
-              <div className="flex items-center gap-1 text-white hover:text-gold-200 transition-colors cursor-pointer">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
+              <div className="flex items-center gap-1 text-white hover:text-gold-200 transition-colors cursor-pointer whitespace-nowrap">
+                <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
                   <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4"/>
                 </svg>
                 <Link
                   href="/"
                   data-nav-link="true"
                   data-hash="#how-it-works"
-                  className="text-sm font-medium text-white hover:text-gold-200 transition-colors"
+                  className="text-sm font-medium text-white hover:text-gold-200 transition-colors whitespace-nowrap"
                   onClick={(e) => handleNavigation(e, { href: '/', hash: '#how-it-works' })}
                 >
                   Как это работает
                 </Link>
               </div>
 
-              <div className="flex items-center gap-1 text-white hover:text-gold-200 transition-colors cursor-pointer">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
+              <div className="flex items-center gap-1 text-white hover:text-gold-200 transition-colors cursor-pointer whitespace-nowrap">
+                <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
                   <path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path>
                 </svg>
                 <Link
                   href="/"
                   data-nav-link="true"
                   data-hash="#why-us"
-                  className="text-sm font-medium text-white hover:text-gold-200 transition-colors"
+                  className="text-sm font-medium text-white hover:text-gold-200 transition-colors whitespace-nowrap"
                   onClick={(e) => handleNavigation(e, { href: '/', hash: '#why-us' })}
                 >
                   Преимущества
                 </Link>
               </div>
 
-              <div className="flex items-center gap-1 text-white hover:text-gold-200 transition-colors cursor-pointer">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
+              <div className="flex items-center gap-1 text-white hover:text-gold-200 transition-colors cursor-pointer whitespace-nowrap">
+                <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
                   <path d="M20 3H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-1 13H5V7h14v9zM7 9h2v2H7zm0 4h2v2H7zm4-4h6v2h-6zm0 4h6v2h-6z"/>
                 </svg>
                 <Link
                   href="/calculator"
-                  className="text-sm font-medium text-white hover:text-gold-200 transition-colors"
+                  className="text-sm font-medium text-white hover:text-gold-200 transition-colors whitespace-nowrap"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Калькулятор
@@ -263,19 +263,19 @@ export default function ClientLayout({
 
               <a
                 href="tel:+79933361405"
-                className="flex items-center gap-2 text-white hover:text-gold-200 transition-colors"
+                className="flex items-center gap-1 text-white hover:text-gold-200 transition-colors whitespace-nowrap"
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
+                <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
                   <path d="M20.487 17.14l-4.065-3.696a1.001 1.001 0 0 0-1.391.043l-2.393 2.461c-.576-.11-1.734-.471-2.926-1.66-1.192-1.193-1.553-2.354-1.66-2.926l2.459-2.394a1 1 0 0 0 .043-1.391L6.859 3.513a1 1 0 0 0-1.391-.087l-2.17 1.861a1 1 0 0 0-.29.649c-.015.25-.301 6.172 4.291 10.766C11.305 20.707 16.323 21 17.705 21c.202 0 .326-.006.359-.008a.992.992 0 0 0 .648-.291l1.86-2.171a.997.997 0 0 0-.085-1.39z"></path>
                 </svg>
-                <span className="text-sm font-medium">+7 993 336 1405</span>
+                <span className="text-sm font-medium whitespace-nowrap">+7 993 336-14-05</span>
               </a>
 
               <button
                 onClick={() => setShowLeadModal(true)}
-                className="px-6 py-3 bg-gold-200 text-black text-sm font-medium rounded-md hover:bg-gold-300 transition-colors duration-200 flex items-center"
+                className="px-4 py-2 bg-gold-200 text-black text-sm font-medium rounded-md hover:bg-gold-300 transition-colors duration-200 flex items-center whitespace-nowrap flex-shrink-0"
               >
-                <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
+                <svg className="w-4 h-4 mr-1.5 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
                   <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.7-8 5.334L4 8.7V6.297l8 5.333 8-5.333V8.7z"/>
                 </svg>
                 Рассчитать стоимость
