@@ -1013,61 +1013,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Отзывы клиентов */}
-          <motion.div
-            className="text-center mb-10"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="inline-block px-4 md:px-6 py-2 bg-gradient-to-r from-gold-200 to-gold-300 text-black rounded-full mb-3 font-medium shadow-md text-sm md:text-base">
-              ОТЗЫВЫ
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold mb-3">Что говорят клиенты</h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                name: 'Алексей М.',
-                role: 'Продавец WB, товары для кухни',
-                text: 'Работаем с LuckyBox уже 8 месяцев. Отличная скорость обработки — заказы уходят день в день. Цены честные, ничего лишнего не насчитывают. Рекомендую.',
-              },
-              {
-                name: 'Светлана К.',
-                role: 'Бренд косметики, Ozon',
-                text: 'Наконец нашли надёжного партнёра для маркировки и упаковки. Стартовали за 2 дня, никаких задержек. Менеджер всегда на связи — это дорогого стоит.',
-              },
-              {
-                name: 'Дмитрий Р.',
-                role: 'Поставщик Яндекс.Маркет',
-                text: 'Перешли от другого ФФ из-за брака при упаковке. Здесь — ноль рекламаций за 5 месяцев. Склад чистый, процессы выстроены. Будем работать дальше.',
-              },
-            ].map((review, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-6 shadow-md border border-gold-100 flex flex-col"
-              >
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-gray-700 text-sm leading-relaxed mb-4 flex-1">{review.text}</p>
-                <div className="border-t border-neutral-100 pt-4">
-                  <p className="font-semibold text-neutral-900">{review.name}</p>
-                  <p className="text-xs text-neutral-500">{review.role}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
 
