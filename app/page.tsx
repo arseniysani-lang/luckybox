@@ -7,6 +7,7 @@ import RollingGallery from './components/RollingGallery';
 import YandexMap from './components/YandexMap';
 import { useState, useEffect, useRef } from 'react';
 import { useLeadModal } from './components/LeadModalContext';
+import HomeCalculator from './components/HomeCalculator';
 
 // Интерфейсы для типизации
 interface IconProps {
@@ -350,6 +351,9 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* Калькулятор фулфилмента */}
+      <HomeCalculator />
 
       {/* О нас - расширенная версия */}
       <section id="about" className="py-16 md:py-24 bg-white">
