@@ -163,7 +163,7 @@ export default function ClientLayout({
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between items-center h-16 md:h-20 lg:h-24">
             {/* Логотип и текст */}
-            <div className="flex items-center">
+            <div className="flex items-center flex-shrink-0">
               <Link href="/" className="flex items-center">
                 <Image
                   src="/logo.webp"
@@ -177,11 +177,15 @@ export default function ClientLayout({
                   sizes="(max-width: 640px) 70px, (max-width: 768px) 85px, 95px"
                   quality={90}
                 />
+                <div className="ml-3 hidden xl:block">
+                  <div className="text-white text-xs font-medium whitespace-nowrap">Профессиональные решения</div>
+                  <div className="text-neutral-200 text-xs whitespace-nowrap">для упаковки вашей продукции</div>
+                </div>
               </Link>
             </div>
 
             {/* Навигационное меню */}
-            <div className="hidden lg:flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
               <div className="flex items-center gap-1 text-white hover:text-gold-200 transition-colors cursor-pointer whitespace-nowrap">
                 <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor" xmlns="https://www.w3.org/2000/svg">
                   <path d="M20 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM4 19V5h16l.002 14H4z"></path>
