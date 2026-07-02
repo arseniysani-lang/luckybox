@@ -177,10 +177,6 @@ export default function ClientLayout({
                   sizes="(max-width: 640px) 70px, (max-width: 768px) 85px, 95px"
                   quality={90}
                 />
-                <div className="ml-2 md:ml-3 lg:ml-4 hidden xl:block">
-                  <div className="text-white text-xs font-medium whitespace-nowrap">Профессиональные решения</div>
-                  <div className="text-neutral-200 text-xs whitespace-nowrap">для упаковки вашей продукции</div>
-                </div>
               </Link>
             </div>
 
