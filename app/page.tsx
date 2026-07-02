@@ -265,7 +265,7 @@ export default function Home() {
         initial={{ opacity: 0 }}
         animate={{ opacity: showScrollTop ? 1 : 0 }}
         onClick={scrollToTop}
-        className="fixed bottom-6 md:bottom-8 right-6 md:right-8 z-50 bg-gold-200 p-3 md:p-4 rounded-full shadow-lg hover:bg-gold-300 transition-all duration-300 cursor-pointer"
+        className="fixed bottom-6 md:bottom-8 right-52 md:right-56 z-50 bg-gold-200 p-3 md:p-4 rounded-full shadow-lg hover:bg-gold-300 transition-all duration-300 cursor-pointer"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         aria-label="Прокрутить наверх"
