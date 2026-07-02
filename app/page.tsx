@@ -275,7 +275,7 @@ export default function Home() {
       </motion.button>
 
       {/* Hero секция с параллакс эффектом */}
-      <section className="relative min-h-screen overflow-hidden">
+      <section className="relative min-h-screen overflow-hidden bg-neutral-900">
         <motion.div
           className="absolute inset-0"
           style={{ y: parallaxY }}
